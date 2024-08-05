@@ -1,0 +1,9 @@
+keys:
+  - &nuv6660 ageTODO
+  - &carbonate ageTODO
+creation_rules:
+  - path_regex: secrets/[^/]+(\.(yaml|json|env|ini|conf))?$
+    key_groups:
+      - age:
+          - *nuv6660
+          - *carbonate
