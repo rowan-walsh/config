@@ -10,5 +10,7 @@
   environment.systemPackages = with pkgs; [
     vscode
     brave
+    cryptsetup # Temporary
+    parted # Temporary
   ];
 }

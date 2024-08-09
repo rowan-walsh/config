@@ -37,6 +37,15 @@
         modules = [./machines/carbonate/configuration.nix];
       };
 
+      iso = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+          ./machines/iso/configuration.nix
+        ];
+      };
+
       # Add other systems here as needed
     };
   };
