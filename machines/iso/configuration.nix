@@ -1,5 +1,5 @@
 {
-    imports=[./../../modules/nixos/iso.nix];
+  imports = [./../../modules/nixos/iso.nix];
 
-    networking.hostName = "iso";
+  networking.hostName = "iso";
 }
