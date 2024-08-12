@@ -1,5 +1,5 @@
 keys:
-  - &nuv6660 ageTODO
+  - &nuv6660 age1e02f5up2s4a4frjpyg00hrhcyrhmzzq63ecetvnpal7knerhrghqmh857a
   - &carbonate ageTODO
 creation_rules:
   - path_regex: secrets/[^/]+(\.(yaml|json|env|ini|conf))?$
