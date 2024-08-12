@@ -48,8 +48,8 @@ if [ "$(uname)" == "Linux" ]; then
         parted $DISK -- mkpart Nix ext4 513MiB 100%
         DISK_NIX_PARTITION="/dev/nvme0n1p2"
     else
-        parted $DISK -- mkpart Swap linux-swap -${SWAP_SIZE_GB}GiB 100%
-        parted $DISK -- mkpart Nix ext4 513MiB -${SWAP_SIZE_GB}GiB
+        parted $DISK -- mkpart Swap linux-swap 513MiB $((513 + 1024*SWAP_SIZE_GB))MiB
+        parted $DISK -- mkpart Nix ext4 $((513 + 1024*SWAP_SIZE_GB))MiB 100%
         DISK_SWAP_PARTITION="/dev/nvme0n1p2"
         DISK_NIX_PARTITION="/dev/nvme0n1p3"
         mkswap $DISK_SWAP_PARTITION
