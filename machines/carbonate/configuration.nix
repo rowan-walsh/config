@@ -42,5 +42,9 @@
     pulse.enable = true;
   };
 
+  #TEMPORARY
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+
   networking.hostName = "carbonate";
 }
