@@ -13,6 +13,9 @@ fmt:
 install MACHINE="carbonate":
     sudo nixos-rebuild switch --flake ".#{{ MACHINE }}"
 
+build-iso:
+    nix build .#nixosConfigurations.iso.config.system.build.isoImage
+
 secrets-edit:
     sops secrets/secrets.yaml
 
