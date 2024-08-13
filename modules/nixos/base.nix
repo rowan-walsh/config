@@ -5,6 +5,8 @@
   ...
 }: {
   imports = [
+    inputs.sops-nix.nixosModules.sops
+
     ./_packages.nix
   ];
 
@@ -21,13 +23,31 @@
     };
   };
 
-  #TODO enable below once pw is handled with sops or something
-  #users.mutableUsers = false;
+  sops = {
+    defaultSopsFile = ./../../secrets/secrets.yaml;
+    age.sshKeyPaths = ["/home/rww/.ssh/id_ed25519.pub"]; #TODO change
+    secrets.user-password.neededForUsers = true;
+    secrets.user-password = {};
+  };
+
+  users.mutableUsers = false;
   users.users.rww = {
     isNormalUser = true;
     description = "Rowan Walsh";
     extraGroups = ["networkmanager" "wheel"];
-    # Set password with `passwd` for now
+    hashedPasswordFile = config.sops.secrets.user-password.path;
+  };
+
+  services = {
+    openssh = {
+      enable = true;
+      settings.PermitRootLogin = "no";
+      openFirewall = true;
+    };
+  };
+
+  networking = {
+    firewall.enable = true;
   };
 
   time.timeZone = "America/Vancouver";
