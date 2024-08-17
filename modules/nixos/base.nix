@@ -41,8 +41,9 @@
   sops = {
     defaultSopsFile = ./../../secrets/secrets.yaml;
     age.sshKeyPaths = ["/etc/ssh/initrd_ssh_host_ed25519_key"];
-    secrets.user-password.neededForUsers = true;
-    secrets.user-password = {};
+    secrets."user-password" = {
+      neededForUsers = true;
+    };
   };
 
   environment.persistence."/persist" = {
@@ -65,7 +66,7 @@
     isNormalUser = true;
     description = "Rowan Walsh";
     extraGroups = ["networkmanager" "wheel"];
-    hashedPasswordFile = config.sops.secrets.user-password.path;
+    hashedPasswordFile = config.sops.secrets."user-password".path;
   };
 
   services = {
