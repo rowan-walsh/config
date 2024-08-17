@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   imports = [
     ./_packages.nix
@@ -6,11 +7,23 @@
   users.users.nixos = {
     isNormalUser = true;
     extraGroups = ["wheel"];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOqlX4bm2rUlVeonvpv2hxW0ajQg/UCCOUNJlmPSZ0dS"
+    ];
+  };
+
+  programs.bash.shellAliases = {
+    install = "sudo bash -c '$(curl -fsSL https://raw.githubusercontent.com/rowan-walsh/config/main/install.sh)'";
+  };
+
+  nix = {
+    settings = {
+      experimental-features = "nix-command flakes";
+      auto-optimise-store = true;
+    };
   };
 
   security.sudo.wheelNeedsPassword = false;
-
-  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   services.openssh = {
     enable = true;

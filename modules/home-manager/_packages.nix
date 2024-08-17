@@ -6,6 +6,7 @@
       alejandra # for nix formatting
       sops # for secrets
       statix # for nix linting
+      balena-etcher # for flashing ISOs
     ];
   };
 }

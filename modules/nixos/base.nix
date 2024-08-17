@@ -15,6 +15,21 @@
     efi.canTouchEfiVariables = true;
   };
 
+  boot.initrd = {
+    network.ssh = {
+      enable = true;
+      port = 2222;
+      hostKeys = [ "/etc/ssh/initrd_ssh_host_ed25519_key" ];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIkcgwjYMHqUDnx0JIOSXQ/TN80KEaFvvUWA2qH1AHFC"
+      ];
+    };
+
+    secrets = {
+      "initrd_ssh_host_ed25519_key" = "/etc/ssh/initrd_ssh_host_ed25519_key";
+    };
+  };
+
   nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
@@ -25,9 +40,24 @@
 
   sops = {
     defaultSopsFile = ./../../secrets/secrets.yaml;
-    age.sshKeyPaths = ["/home/rww/.ssh/id_ed25519.pub"]; #TODO change
+    age.sshKeyPaths = ["/etc/ssh/initrd_ssh_host_ed25519_key"];
     secrets.user-password.neededForUsers = true;
     secrets.user-password = {};
+  };
+
+  environment.persistence."/persist" = {
+    # Hide these mounts from the sidebar of file managers
+    hideMounts = true;
+
+    files = [
+      "/etc/machine-id"
+      "/etc/ssh/initrd_ssh_host_ed25519_key.pub"
+      "/etc/ssh/initrd_ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_rsa_key.pub"
+      "/etc/ssh/ssh_host_rsa_key"
+    ];
   };
 
   users.mutableUsers = false;
