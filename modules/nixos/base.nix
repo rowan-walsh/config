@@ -19,7 +19,7 @@
     network.ssh = {
       enable = true;
       port = 2222;
-      hostKeys = [ "/etc/ssh/initrd_ssh_host_ed25519_key" ];
+      hostKeys = ["/etc/ssh/initrd_ssh_host_ed25519_key"];
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIkcgwjYMHqUDnx0JIOSXQ/TN80KEaFvvUWA2qH1AHFC"
       ];
