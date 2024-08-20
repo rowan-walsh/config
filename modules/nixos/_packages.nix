@@ -4,6 +4,7 @@
     git
     gptfdisk
     parted
+    ssh-to-age
     ventoy
     vim
   ];

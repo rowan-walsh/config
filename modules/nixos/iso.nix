@@ -13,6 +13,7 @@
 
   programs.bash.shellAliases = {
     install = "sudo bash -c '$(curl -fsSL https://raw.githubusercontent.com/rowan-walsh/config/main/install.sh)'";
+    install-offline = "OFFLINE_INSTALL=1 sudo sh $HOME/install.sh";
   };
 
   nix = {
