@@ -19,47 +19,47 @@
     extraModulePackages = [];
   };
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/8804a11d-1805-4ef5-aae1-a6128a9bf609";
-      fsType = "btrfs";
-      options = [ "subvol=root" ];
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/nix";
+    fsType = "btrfs";
+    options = ["subvol=root"];
+  };
 
-  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/d297473e-7ecc-407e-9ee3-747c0299a73a";
+  boot.initrd.luks.devices."cryptroot".device = "/dev/nvme0n1p3";
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/4F49-3C3B";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/boot";
+    fsType = "vfat";
+    options = ["fmask=0022" "dmask=0022"];
+  };
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/8804a11d-1805-4ef5-aae1-a6128a9bf609";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
-    };
+  fileSystems."/home" = {
+    device = "/dev/disk/by-label/nix";
+    fsType = "btrfs";
+    options = ["subvol=home"];
+  };
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/8804a11d-1805-4ef5-aae1-a6128a9bf609";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-label/nix";
+    fsType = "btrfs";
+    options = ["subvol=nix"];
+  };
 
-  fileSystems."/persist" =
-    { device = "/dev/disk/by-uuid/8804a11d-1805-4ef5-aae1-a6128a9bf609";
-      fsType = "btrfs";
-      options = [ "subvol=persist" ];
-    };
+  fileSystems."/persist" = {
+    device = "/dev/disk/by-label/nix";
+    fsType = "btrfs";
+    options = ["subvol=persist"];
+  };
 
-  fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/8804a11d-1805-4ef5-aae1-a6128a9bf609";
-      fsType = "btrfs";
-      options = [ "subvol=log" ];
-    };
+  fileSystems."/var/log" = {
+    device = "/dev/disk/by-label/nix";
+    fsType = "btrfs";
+    options = ["subvol=log"];
+  };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/9b927160-829c-44ca-8303-ad163b6c1886"; }
-    ];
+  swapDevices = [
+    {device = "/dev/disk/by-label/swap";}
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
