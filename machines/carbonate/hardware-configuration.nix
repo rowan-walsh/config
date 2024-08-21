@@ -49,12 +49,14 @@
     device = "/dev/disk/by-label/nix";
     fsType = "btrfs";
     options = ["subvol=persist"];
+    neededForBoot = true;
   };
 
   fileSystems."/var/log" = {
     device = "/dev/disk/by-label/nix";
     fsType = "btrfs";
     options = ["subvol=log"];
+    neededForBoot = true;
   };
 
   swapDevices = [
