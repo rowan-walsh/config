@@ -4,12 +4,14 @@
   ...
 }: {
   imports = [
+    inputs.impermanence.nixosModules.impermanence
     inputs.home-manager.nixosModules.home-manager
 
     ./hardware-configuration.nix
 
     ./../../modules/nixos/base.nix
     ./../../modules/nixos/desktop.nix
+    ./../../modules/nixos/wifi.nix
   ];
 
   home-manager = {
@@ -41,10 +43,6 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-
-  #TEMPORARY
-  virtualisation.libvirtd.enable = true;
-  programs.virt-manager.enable = true;
 
   networking.hostName = "carbonate";
 }

@@ -1,13 +1,7 @@
 {
-  inputs,
   config,
-  pkgs,
   ...
 }: {
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-  ];
-
   sops.secrets."wireless.env" = {};
 
   networking.networkmanager.enable = true;
@@ -23,7 +17,6 @@
   };
 
   environment.persistence."/persist" = {
-    hideMounts = true;
     files = [
       "/etc/wpa_supplicant.conf"
     ];

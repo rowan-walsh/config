@@ -1,7 +1,6 @@
 {
   inputs,
   config,
-  pkgs,
   ...
 }: {
   imports = [
@@ -16,13 +15,14 @@
   };
 
   boot.initrd = {
-    network.ssh = {
+    network = {
       enable = true;
-      port = 2222;
-      hostKeys = ["/etc/ssh/initrd_ssh_host_ed25519_key"];
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIkcgwjYMHqUDnx0JIOSXQ/TN80KEaFvvUWA2qH1AHFC"
-      ];
+      ssh = {
+        enable = true;
+        port = 2222;
+        hostKeys = ["/etc/ssh/initrd_ssh_host_ed25519_key"];
+        authorizedKeys = config.users.users.rww.openssh.authorizedKeys.keys;
+      };
     };
 
     secrets = {
@@ -66,6 +66,9 @@
     isNormalUser = true;
     description = "Rowan Walsh";
     extraGroups = ["networkmanager" "wheel"];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOqlX4bm2rUlVeonvpv2hxW0ajQg/UCCOUNJlmPSZ0dS"
+    ];
     hashedPasswordFile = config.sops.secrets."user-password".path;
   };
 
