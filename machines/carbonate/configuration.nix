@@ -11,7 +11,7 @@
 
     ./../../modules/nixos/base.nix
     ./../../modules/nixos/desktop.nix
-    ./../../modules/nixos/wifi.nix
+    # ./../../modules/nixos/wifi.nix
   ];
 
   home-manager = {

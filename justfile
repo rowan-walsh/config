@@ -10,8 +10,13 @@ lint:
 fmt:
     nix fmt
 
-install MACHINE="carbonate":
-    sudo nixos-rebuild switch --flake ".#{{ MACHINE }}"
+install MACHINE="carbonate" IP="" USER="rww":
+    #!/usr/bin/env sh
+    if [ -z "{{ IP }}" ]; then
+        sudo nixos-rebuild switch --fast --flake ".#{{ MACHINE }}"
+    else
+        nixos-rebuild switch --fast --flake ".#{{ MACHINE }}" --use-remote-sudo --target-host "{{ USER }}@{{ IP }}" --build-host "{{ USER }}@{{ IP }}"
+    fi
 
 build-iso:
     nix --extra-experimental-features "nix-command flakes" build ".#nixosConfigurations.iso.config.system.build.isoImage"
