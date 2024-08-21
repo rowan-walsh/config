@@ -1,5 +1,5 @@
 {config, ...}: {
-  sops.secrets."wireless.env" = {};
+  sops.secrets."wireless-env" = {};
 
   networking.networkmanager.unmanaged = [
     "*"
@@ -9,7 +9,7 @@
 
   networking.wireless = {
     enable = true;
-    environmentFile = config.sops.secrets."wireless.env".path;
+    environmentFile = config.sops.secrets."wireless-env".path;
     networks = {
       "@home_uuid@" = {
         psk = "@home_psk@";
