@@ -1,6 +1,6 @@
 keys:
   - &nuv6660 age1e02f5up2s4a4frjpyg00hrhcyrhmzzq63ecetvnpal7knerhrghqmh857a
-  - &carbonate age1v0w0c3eq5j0tjt3lz96wzvfec2c7q85nwx9km4s0r2s8vt4me4uspa5drw
+  - &carbonate age1zdd8aepdmpn237z2sly9u0cpvnyp8dc0sjydxy8tfypx9t9szyrq7lg3kl
 creation_rules:
   - path_regex: secrets(\\[^\\]+?|/[^/]+?)$
     key_groups:
