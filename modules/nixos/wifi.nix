@@ -1,10 +1,11 @@
-{
-  config,
-  ...
-}: {
+{config, ...}: {
   sops.secrets."wireless.env" = {};
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager.unmanaged = [
+    "*"
+    "except:type:wwan"
+    "except:type:gsm"
+  ];
 
   networking.wireless = {
     enable = true;
