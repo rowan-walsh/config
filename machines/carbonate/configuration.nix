@@ -11,6 +11,7 @@
 
     ./../../modules/nixos/base.nix
     ./../../modules/nixos/desktop.nix
+    ./../../modules/nixos/portable.nix
     # ./../../modules/nixos/wifi.nix
   ];
 
