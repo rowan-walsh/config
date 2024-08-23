@@ -1,0 +1,132 @@
+{
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.inlineSuggest.enabled": true,
+    "go.toolsManagement.autoUpdate": true,
+    "editor.bracketPairColorization.enabled": false,
+    "go.lintTool": "golangci-lint",
+    "go-template.patterns": [
+        "*.go.tmpl.html",
+        "*.go.tmpl.txt"
+    ],
+    "go-template.languages": [
+        "html"
+    ],
+    "explorer.confirmDelete": false,
+    "workbench.startupEditor": "none",
+    "explorer.confirmDragAndDrop": false,
+    "[elixir]": {
+        "files.trimTrailingWhitespace": true
+    },
+    "[go]": {
+        "editor.rulers": [
+            80
+        ]
+    },
+    "git.confirmSync": false,
+    "[rust]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "rust-lang.rust-analyzer"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.rulers": [
+            88
+        ],
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.typeCheckingMode": "standard",
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.autoImportCompletions": true,
+    "rust-analyzer.completion.privateEditable.enable": true,
+    "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "skip_trivial",
+    "rust-analyzer.restartServerOnConfigChange": true,
+    "rust-analyzer.semanticHighlighting.punctuation.separate.macro.bang": true,
+    "telemetry.telemetryLevel": "off",
+    "evenBetterToml.schema.links": true,
+    "evenBetterToml.formatter.trailingNewline": true,
+    "evenBetterToml.formatter.indentTables": true,
+    "evenBetterToml.formatter.indentEntries": true,
+    "evenBetterToml.formatter.crlf": false,
+    "evenBetterToml.formatter.compactInlineTables": false,
+    "evenBetterToml.formatter.compactEntries": false,
+    "evenBetterToml.formatter.compactArrays": false,
+    "evenBetterToml.formatter.arrayTrailingComma": true,
+    "evenBetterToml.formatter.arrayAutoExpand": true,
+    "evenBetterToml.formatter.arrayAutoCollapse": true,
+    "evenBetterToml.formatter.columnWidth": 80,
+    "evenBetterToml.formatter.allowedBlankLines": 1,
+    "evenBetterToml.formatter.alignEntries": true,
+    "evenBetterToml.formatter.alignComments": true,
+    "evenBetterToml.formatter.indentString": "    ",
+    "rust-analyzer.inlayHints.parameterHints.enable": false,
+    "rust-analyzer.inlayHints.typeHints.enable": false,
+    "evenBetterToml.formatter.reorderArrays": true,
+    "evenBetterToml.formatter.reorderKeys": false,
+    "evenBetterToml.formatter.inlineTableExpand": true,
+    "rust-analyzer.hover.actions.references.enable": true,
+    "rust-analyzer.semanticHighlighting.operator.specialization.enable": true,
+    "rust-analyzer.semanticHighlighting.punctuation.enable": true,
+    "rust-analyzer.semanticHighlighting.punctuation.specialization.enable": true,
+    "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
+    "workbench.iconTheme": "material-icon-theme",
+    "notebook.output.textLineLimit": 60,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false
+    },
+    "zig.path": "",
+    "zig.zls.path": "c:\\Users\\rwnwa\\AppData\\Roaming\\Code\\User\\globalStorage\\ziglang.vscode-zig\\zls_install\\zls.exe",
+    "zig.initialSetupDone": true,
+    "workbench.colorTheme": "Material Theme Palenight High Contrast",
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "path": "C:\\Users\\rwnwa\\scoop\\apps\\git\\current\\bin\\bash.exe",
+            "icon": "terminal-bash",
+            "font": "Fira Code"
+        },
+        "Zsh": {
+            "path": "C:\\Program Files\\Git\\usr\\bin\\zsh.exe",
+            "args": [
+                "-l",
+                "-i"
+            ],
+            "icon": "terminal-cmd",
+            "font": "Fira Code"
+        },
+        "Ubuntu (WSL)": {
+            "path": "C:\\WINDOWS\\System32\\wsl.exe",
+            "args": [
+                "-d",
+                "Ubuntu"
+            ]
+        }
+    },
+    "files.exclude": {
+        "**/.jj": true
+    },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "go.mod": "go.sum",
+        "flake.nix": "flake.lock"
+    },
+    "window.confirmSaveUntitledWorkspace": false
+}
