@@ -20,13 +20,13 @@
       ssh = {
         enable = true;
         port = 2222;
-        hostKeys = ["/etc/ssh/initrd_ssh_host_ed25519_key"];
+        hostKeys = ["/persist/etc/ssh/initrd_ssh_host_ed25519_key"];
         authorizedKeys = config.users.users.rww.openssh.authorizedKeys.keys;
       };
     };
 
     secrets = {
-      "initrd_ssh_host_ed25519_key" = "/etc/ssh/initrd_ssh_host_ed25519_key";
+      "initrd_ssh_host_ed25519_key" = "/persist/etc/ssh/initrd_ssh_host_ed25519_key";
     };
   };
 
@@ -40,7 +40,7 @@
 
   sops = {
     defaultSopsFile = ./../../secrets/secrets.yaml;
-    age.sshKeyPaths = ["/etc/ssh/initrd_ssh_host_ed25519_key"];
+    age.sshKeyPaths = ["/persist/etc/ssh/initrd_ssh_host_ed25519_key"];
     secrets."user-password" = {
       neededForUsers = true;
     };
