@@ -48,6 +48,7 @@
         sha256 = "da29a516efb6dcdff716eb8150a664a5102f6be4ee95cc463f65d5f41d5933b0";
       }
     ];
+        editorconfig.editorconfig
     userSettings = lib.importJSON ./vscode/settings.json;
   };
 
