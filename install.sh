@@ -142,11 +142,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # Creating public age key for sops-nix
     echo -e "\n\033[1mConverting initrd public SSH host key into public age key for sops-nix...\033[0m"
-    if [ -z "$OFFLINE_INSTALL" ]; then
-        sudo nix-shell --extra-experimental-features flakes -p ssh-to-age --run 'ssh-to-age < /mnt/etc/ssh/initrd_ssh_host_ed25519_key.pub'
-    else
-        ssh-to-age < /mnt/etc/ssh/initrd_ssh_host_ed25519_key.pub
-    fi
+    ssh-to-age < /mnt/etc/ssh/initrd_ssh_host_ed25519_key.pub
     echo -e "\033[32mAge public key generated successfully.\033[0m"
 
     # Completed
