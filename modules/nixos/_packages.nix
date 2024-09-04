@@ -7,5 +7,6 @@
     ssh-to-age
     ventoy
     vim
+    zfs
   ];
 }

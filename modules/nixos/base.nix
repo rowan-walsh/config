@@ -28,6 +28,11 @@
     secrets = {
       "initrd_ssh_host_ed25519_key" = "/persist/etc/ssh/initrd_ssh_host_ed25519_key";
     };
+
+    # TODO: enable this once the system is stable
+    # postDeviceCommands = lib.mkAfter ''
+    #   zfs rollback -r rpool/local/root@blank
+    # '';
   };
 
   nixpkgs.config.allowUnfree = true;

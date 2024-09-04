@@ -40,6 +40,19 @@ if [ "$(uname)" == "Linux" ]; then
         exit 1
     fi
 
+    # Prompt user for reserve size
+    echo -e "\n\033[1mReserve Size:\033[0m"
+    read -r -p "Enter reserve size in GiB (e.g. '4'), for no reserve leave blank: " RESERVE_SIZE_GiB
+    if [ -z "$RESERVE_SIZE_GiB" ]; then
+        RESERVE_SIZE_GiB=0
+        echo -e "\033[32mNo reserve partition will be created.\033[0m"
+    elif [[ $RESERVE_SIZE_GiB =~ ^[1-9][0-9]*$ ]]; then
+        echo -e "\033[32mReserve partition will be created with $RESERVE_SIZE_GiB GiB ($((RESERVE_SIZE_GiB * 1024)) MiB).\033[0m"
+    else
+        echo -e "\033[31mInvalid input. Please enter a numerical value for reserve size.\033[0m"
+        exit 1
+    fi
+
     # Display warning, wait for confirmation
     echo -e "\n\033[1;31mWarning: After this point the script is irreversible, all disk data will be lost.\033[0m"
     read -n 1 -s -r -p "Press Ctrl+C to abort, or any other key to continue..."
@@ -60,11 +73,11 @@ if [ "$(uname)" == "Linux" ]; then
     parted "$DISK" -- set 1 boot on
     DISK_BOOT_PARTITION="${DISK}${DISK_SUFFIX}1"
     if [ -z "$SWAP_SIZE_GiB" ]; then
-        parted "$DISK" -- mkpart Nix ext4 513MiB 100%
+        parted "$DISK" -- mkpart Nix ext4 513MiB -"${RESERVE_SIZE_GiB}"GiB
         DISK_NIX_PARTITION="${DISK}${DISK_SUFFIX}2"
     else
         parted "$DISK" -- mkpart Swap linux-swap 513MiB $((513 + 1024*SWAP_SIZE_GiB))MiB
-        parted "$DISK" -- mkpart Nix ext4 $((513 + 1024*SWAP_SIZE_GiB))MiB 100%
+        parted "$DISK" -- mkpart Nix ext4 $((513 + 1024*SWAP_SIZE_GiB))MiB -"${RESERVE_SIZE_GiB}"GiB
         DISK_SWAP_PARTITION="${DISK}${DISK_SUFFIX}2"
         DISK_NIX_PARTITION="${DISK}${DISK_SUFFIX}3"
     fi
@@ -84,27 +97,37 @@ if [ "$(uname)" == "Linux" ]; then
         mkswap -L swap "$DISK_SWAP_PARTITION"
         swapon "$DISK_SWAP_PARTITION"
     fi
-    mkfs.btrfs -L nix $DISK_NIX_ENCRYPT
-    sleep 2 # Let mkfs catch its breath
+    sleep 1 # Let mkfs catch its breath
+    zpool create \
+        -o ashift=12 \
+        -o autotrim=on \
+        -R /mnt \
+        -O acltype=posixacl \
+        -O canmount=off \
+        -O dnodesize=auto \
+        -O normalization=formD \
+        -O relatime=on \
+        -O xattr=sa \
+        -O mountpoint=none \
+        rpool \
+        $DISK_NIX_ENCRYPT
     echo -e "\033[32mFilesystems created successfully.\033[0m"
 
     # Mounting filesystems
     echo -e "\n\033[1mMounting filesystems...\033[0m"
-    mount -t btrfs $DISK_NIX_ENCRYPT /mnt
-    btrfs subvolume create /mnt/root
-    btrfs subvolume create /mnt/home
-    btrfs subvolume create /mnt/nix
-    btrfs subvolume create /mnt/persist
-    btrfs subvolume create /mnt/log
-    btrfs subvolume snapshot -r /mnt/root /mnt/root-blank # For rollback
-    umount /mnt
-    mount -o subvol=root,compress=zstd,noatime $DISK_NIX_ENCRYPT /mnt
+    zfs create -p -o mountpoint=legacy rpool/local/root
+    zfs snapshot rpool/local/root@blank # For rollback
+    zfs create -p -o mountpoint=legacy rpool/safe/home
+    zfs create -p -o mountpoint=legacy rpool/local/nix
+    zfs create -p -o mountpoint=legacy rpool/safe/persist
+    zfs create -p -o mountpoint=legacy rpool/safe/log
+    mount -t zfs rpool/local/root /mnt
     mkdir -pv /mnt/{boot,home,nix,persist,var/log}
     mount "$DISK_BOOT_PARTITION" /mnt/boot
-    mount -o subvol=home,compress=zstd,noatime $DISK_NIX_ENCRYPT /mnt/home
-    mount -o subvol=nix,compress=zstd,noatime $DISK_NIX_ENCRYPT /mnt/nix
-    mount -o subvol=persist,compress=zstd,noatime $DISK_NIX_ENCRYPT /mnt/persist
-    mount -o subvol=log,compress=zstd,noatime $DISK_NIX_ENCRYPT /mnt/var/log
+    mount -t zfs rpool/safe/home /mnt/home
+    mount -t zfs rpool/local/nix /mnt/nix
+    mount -t zfs rpool/safe/persist /mnt/persist
+    mount -t zfs rpool/safe/log /mnt/var/log
     echo -e "\033[32mFilesystems mounted successfully.\033[0m"
 
     # Generating initrd SSH host key
