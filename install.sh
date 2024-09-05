@@ -13,7 +13,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # Prompt user for disk name
     echo -e "\033[1mSelect Disk:\033[0m"
-    read -p "Enter disk name (e.g. '/dev/nvme0n1'): " DISK
+    read -r -p "Enter disk name (e.g. '/dev/nvme0n1'): " DISK
     if [ -b "$DISK" ]; then
         echo -e "\033[32mDisk '$DISK' will be used.\033[0m"
     else
@@ -30,7 +30,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # Prompt user for swap size
     echo -e "\n\033[1mSwap Size:\033[0m"
-    read -p "Enter swap size in GiB (e.g. '4'), for no swap leave blank: " SWAP_SIZE_GiB
+    read -r -p "Enter swap size in GiB (e.g. '4'), for no swap leave blank: " SWAP_SIZE_GiB
     if [ -z "$SWAP_SIZE_GiB" ]; then
         echo -e "\033[32mNo swap partition will be created.\033[0m"
     elif [[ $SWAP_SIZE_GiB =~ ^[1-9][0-9]*$ ]]; then
@@ -55,16 +55,16 @@ if [ "$(uname)" == "Linux" ]; then
 
     # Partition disk
     echo -e "\n\033[1mPartitioning disk...\033[0m"
-    parted $DISK -- mklabel gpt
-    parted $DISK -- mkpart ESP fat32 1MiB 513MiB
-    parted $DISK -- set 1 boot on
+    parted "$DISK" -- mklabel gpt
+    parted "$DISK" -- mkpart ESP fat32 1MiB 513MiB
+    parted "$DISK" -- set 1 boot on
     DISK_BOOT_PARTITION="${DISK}${DISK_SUFFIX}1"
     if [ -z "$SWAP_SIZE_GiB" ]; then
-        parted $DISK -- mkpart Nix ext4 513MiB 100%
+        parted "$DISK" -- mkpart Nix ext4 513MiB 100%
         DISK_NIX_PARTITION="${DISK}${DISK_SUFFIX}2"
     else
-        parted $DISK -- mkpart Swap linux-swap 513MiB $((513 + 1024*SWAP_SIZE_GiB))MiB
-        parted $DISK -- mkpart Nix ext4 $((513 + 1024*SWAP_SIZE_GiB))MiB 100%
+        parted "$DISK" -- mkpart Swap linux-swap 513MiB $((513 + 1024*SWAP_SIZE_GiB))MiB
+        parted "$DISK" -- mkpart Nix ext4 $((513 + 1024*SWAP_SIZE_GiB))MiB 100%
         DISK_SWAP_PARTITION="${DISK}${DISK_SUFFIX}2"
         DISK_NIX_PARTITION="${DISK}${DISK_SUFFIX}3"
     fi
@@ -72,17 +72,17 @@ if [ "$(uname)" == "Linux" ]; then
 
     # Set up encryption (will prompt for password)
     echo -e "\n\033[1mSetting up encryption (script will prompt for crypt password)...\033[0m"
-    cryptsetup -q -v --verify-passphrase luksFormat $DISK_NIX_PARTITION
-    cryptsetup -q -v open $DISK_NIX_PARTITION cryptroot
+    cryptsetup -q -v --verify-passphrase luksFormat "$DISK_NIX_PARTITION"
+    cryptsetup -q -v open "$DISK_NIX_PARTITION" cryptroot
     DISK_NIX_ENCRYPT="/dev/mapper/cryptroot"
     echo -e "\033[32mEncryption set up successfully.\033[0m"
 
     # Creating filesystems
     echo -e "\n\033[1mCreating filesystems...\033[0m"
-    mkfs.vfat -n boot $DISK_BOOT_PARTITION
-    if [ ! -z "$SWAP_SIZE_GiB" ]; then
-        mkswap -L swap $DISK_SWAP_PARTITION
-        swapon $DISK_SWAP_PARTITION
+    mkfs.vfat -n boot "$DISK_BOOT_PARTITION"
+    if [ -n "$SWAP_SIZE_GiB" ]; then
+        mkswap -L swap "$DISK_SWAP_PARTITION"
+        swapon "$DISK_SWAP_PARTITION"
     fi
     mkfs.btrfs -L nix $DISK_NIX_ENCRYPT
     sleep 2 # Let mkfs catch its breath
@@ -100,7 +100,7 @@ if [ "$(uname)" == "Linux" ]; then
     umount /mnt
     mount -o subvol=root,compress=zstd,noatime $DISK_NIX_ENCRYPT /mnt
     mkdir -pv /mnt/{boot,home,nix,persist,var/log}
-    mount $DISK_BOOT_PARTITION /mnt/boot
+    mount "$DISK_BOOT_PARTITION" /mnt/boot
     mount -o subvol=home,compress=zstd,noatime $DISK_NIX_ENCRYPT /mnt/home
     mount -o subvol=nix,compress=zstd,noatime $DISK_NIX_ENCRYPT /mnt/nix
     mount -o subvol=persist,compress=zstd,noatime $DISK_NIX_ENCRYPT /mnt/persist
@@ -120,9 +120,9 @@ if [ "$(uname)" == "Linux" ]; then
     # Creating public age key for sops-nix
     echo -e "\n\033[1mConverting initrd public SSH host key into public age key for sops-nix...\033[0m"
     if [ -z "$OFFLINE_INSTALL" ]; then
-        sudo nix-shell --extra-experimental-features flakes -p ssh-to-age --run 'cat /mnt/etc/ssh/initrd_ssh_host_ed25519_key.pub | ssh-to-age'
+        sudo nix-shell --extra-experimental-features flakes -p ssh-to-age --run 'ssh-to-age < /mnt/etc/ssh/initrd_ssh_host_ed25519_key.pub'
     else
-        cat /mnt/etc/ssh/initrd_ssh_host_ed25519_key.pub | ssh-to-age
+        ssh-to-age < /mnt/etc/ssh/initrd_ssh_host_ed25519_key.pub
     fi
     echo -e "\033[32mAge public key generated successfully.\033[0m"
 
