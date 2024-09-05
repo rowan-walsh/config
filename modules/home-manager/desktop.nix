@@ -40,6 +40,7 @@
         redhat.vscode-xml
         rust-lang.rust-analyzer
         tamasfe.even-better-toml
+        timonwong.shellcheck
         vadimcn.vscode-lldb
         ziglang.vscode-zig
       ]
