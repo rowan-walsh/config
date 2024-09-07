@@ -1,5 +1,6 @@
 {
   inputs,
+  config,
   outputs,
   ...
 }: {
@@ -46,4 +47,5 @@
   };
 
   networking.hostName = "carbonate";
+  networking.hostId = builtins.substring 0 8 (builtins.hashString "sha256" config.networking.hostName); # required for ZFS
 }

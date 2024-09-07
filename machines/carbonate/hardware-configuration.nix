@@ -26,12 +26,13 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/1CEA-8125";
     fsType = "vfat";
-    options = ["fmask=0022" "dmask=0022"];
+    options = ["fmask=0022" "dmask=0022" "umask=0077"];
   };
 
   fileSystems."/home" = {
     device = "rpool/safe/home";
     fsType = "zfs";
+    neededForBoot = true;
   };
 
   fileSystems."/nix" = {
@@ -42,11 +43,13 @@
   fileSystems."/persist" = {
     device = "rpool/safe/persist";
     fsType = "zfs";
+    neededForBoot = true;
   };
 
   fileSystems."/var/log" = {
     device = "rpool/safe/log";
     fsType = "zfs";
+    neededForBoot = true;
   };
 
   swapDevices = [
