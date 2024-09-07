@@ -29,6 +29,6 @@ secrets-edit:
 
 secrets-rotate:
     for file in secrets/*; do sops --rotate --in-place "$file"; done
-  
+
 secrets-sync:
     for file in secrets/*; do sops updatekeys "$file"; done

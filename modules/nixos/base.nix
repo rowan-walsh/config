@@ -2,6 +2,7 @@
   inputs,
   config,
   lib,
+  pkgs,
   ...
 }: {
   imports = [
@@ -30,9 +31,18 @@
       "initrd_ssh_host_ed25519_key" = "/etc/ssh/initrd_ssh_host_ed25519_key";
     };
 
-    postDeviceCommands = lib.mkAfter ''
-      zfs rollback -r rpool/local/root@blank
-    '';
+    systemd.services.rollback = {
+      description = "Rollback ZFS datasets to a pristine state";
+      wantedBy = ["initrd.target"];
+      after = ["zfs-import-rpool.service"]; # Is this right?
+      before = ["sysroot.mount"];
+      path = with pkgs; [zfs];
+      unitConfig.DefaultDependencies = "no";
+      serviceConfig.Type = "oneshot";
+      script = ''
+        zfs rollback -r rpool/local/root@blank && echo "Rollback complete"
+      '';
+    };
   };
 
   nixpkgs.config.allowUnfree = true;
