@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  lib,
   ...
 }: {
   imports = [
@@ -29,10 +30,9 @@
       "initrd_ssh_host_ed25519_key" = "/etc/ssh/initrd_ssh_host_ed25519_key";
     };
 
-    # TODO: enable this once the system is stable
-    # postDeviceCommands = lib.mkAfter ''
-    #   zfs rollback -r rpool/local/root@blank
-    # '';
+    postDeviceCommands = lib.mkAfter ''
+      zfs rollback -r rpool/local/root@blank
+    '';
   };
 
   nixpkgs.config.allowUnfree = true;
