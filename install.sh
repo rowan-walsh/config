@@ -99,6 +99,7 @@ if [ "$(uname)" == "Linux" ]; then
     fi
     sleep 1 # Let mkfs catch its breath
     zpool create \
+        -v \
         -o ashift=12 \
         -o autotrim=on \
         -R /mnt \
@@ -115,39 +116,41 @@ if [ "$(uname)" == "Linux" ]; then
 
     # Mounting filesystems
     echo -e "\n\033[1mMounting filesystems...\033[0m"
-    zfs create -p -o mountpoint=legacy rpool/local/root
-    zfs snapshot rpool/local/root@blank # For rollback
-    zfs create -p -o mountpoint=legacy rpool/safe/home
-    zfs create -p -o mountpoint=legacy rpool/local/nix
-    zfs create -p -o mountpoint=legacy rpool/safe/persist
-    zfs create -p -o mountpoint=legacy rpool/safe/log
-    mount -t zfs rpool/local/root /mnt
+    zfs create -v -p -o mountpoint=legacy rpool/local/root
+    zfs snapshot -v rpool/local/root@blank # For rollback
+    zfs create -v -p -o mountpoint=legacy rpool/safe/home
+    zfs create -v -p -o mountpoint=legacy rpool/local/nix
+    zfs create -v -p -o mountpoint=legacy rpool/safe/persist
+    zfs create -v -p -o mountpoint=legacy rpool/safe/log
+    mount -v -t zfs rpool/local/root /mnt
     mkdir -pv /mnt/{boot,home,nix,persist,var/log}
-    mount "$DISK_BOOT_PARTITION" /mnt/boot
-    mount -t zfs rpool/safe/home /mnt/home
-    mount -t zfs rpool/local/nix /mnt/nix
-    mount -t zfs rpool/safe/persist /mnt/persist
-    mount -t zfs rpool/safe/log /mnt/var/log
+    mount -v "$DISK_BOOT_PARTITION" /mnt/boot
+    mount -v -t zfs rpool/safe/home /mnt/home
+    mount -v -t zfs rpool/local/nix /mnt/nix
+    mount -v -t zfs rpool/safe/persist /mnt/persist
+    mount -v -t zfs rpool/safe/log /mnt/var/log
     echo -e "\033[32mFilesystems mounted successfully.\033[0m"
 
     # Generating initrd SSH host key
     echo -e "\n\033[1mGenerating initrd SSH host keys...\033[0m"
-    mkdir -pv /mnt/etc/ssh
-    chown root:root /mnt/etc/ssh
-    chmod 700 /mnt/etc/ssh
-    ssh-keygen -t ed25519 -N "" -C "" -f  /mnt/etc/ssh/initrd_ssh_host_ed25519_key
-    chown root:root /mnt/etc/ssh/initrd_ssh_host_ed25519_key
-    chmod 600 /mnt/etc/ssh/initrd_ssh_host_ed25519_key
+    mkdir -pv /mnt/persist/secret
+    chown root:root /mnt/persist/secret
+    chmod 700 /mnt/persist/secret
+    ssh-keygen -t ed25519 -N "" -C "" -f  /mnt/persist/secret/initrd_ssh_host_ed25519_key
+    chown root:root /mnt/persist/secret/initrd_ssh_host_ed25519_key
+    chmod 600 /mnt/persist/secret/initrd_ssh_host_ed25519_key
     echo -e "\033[32mSSH host keys generated successfully.\033[0m"
 
     # Creating public age key for sops-nix
     echo -e "\n\033[1mConverting initrd public SSH host key into public age key for sops-nix...\033[0m"
-    ssh-to-age < /mnt/etc/ssh/initrd_ssh_host_ed25519_key.pub
+    # Use nix-shell to run ssh-to-age with flakes (latest), if not available use ssh-to-age directly
+    sudo nix-shell --extra-experimental-features flakes -p ssh-to-age --run 'ssh-to-age < /mnt/persist/secret/initrd_ssh_host_ed25519_key.pub' || \
+        ssh-to-age < /mnt/persist/secret/initrd_ssh_host_ed25519_key.pub
     echo -e "\033[32mAge public key generated successfully.\033[0m"
 
     # Completed
     echo -e "\n\033[1;32mAll steps completed successfully. NixOS is now ready to be installed.\033[0m\n"
-    echo -e "Remember to add the server's host public key to sops-nix before installing!"
+    echo -e "Remember to add the server's age public key to sops-nix before installing!"
     echo -e "To install NixOS configuration for hostname, run the following command:\n"
     echo -e "    \033[1msudo nixos-install --no-root-passwd --root /mnt --flake github:rowan-walsh/config#[HOSTNAME]\033[0m\n"
   else

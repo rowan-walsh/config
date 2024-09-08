@@ -22,13 +22,13 @@
       ssh = {
         enable = true;
         port = 2222;
-        hostKeys = ["/etc/ssh/initrd_ssh_host_ed25519_key"];
+        hostKeys = ["/persist/secret/initrd_ssh_host_ed25519_key"];
         authorizedKeys = config.users.users.rww.openssh.authorizedKeys.keys;
       };
     };
 
     secrets = {
-      "initrd_ssh_host_ed25519_key" = "/etc/ssh/initrd_ssh_host_ed25519_key";
+      "initrd_ssh_host_ed25519_key" = "/persist/secret/initrd_ssh_host_ed25519_key";
     };
 
     systemd.services.rollback = {
@@ -55,7 +55,7 @@
 
   sops = {
     defaultSopsFile = ./../../secrets/secrets.yaml;
-    age.sshKeyPaths = ["/etc/ssh/initrd_ssh_host_ed25519_key"];
+    age.sshKeyPaths = ["/persist/secret/initrd_ssh_host_ed25519_key"];
     secrets."user-password" = {
       neededForUsers = true;
     };
@@ -72,8 +72,6 @@
     files = [
       "/etc/adjtime"
       "/etc/machine-id"
-      "/etc/ssh/initrd_ssh_host_ed25519_key.pub"
-      "/etc/ssh/initrd_ssh_host_ed25519_key"
       "/etc/ssh/ssh_host_ed25519_key.pub"
       "/etc/ssh/ssh_host_ed25519_key"
       "/etc/ssh/ssh_host_rsa_key.pub"
