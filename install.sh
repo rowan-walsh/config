@@ -61,45 +61,45 @@ if [ "$(uname)" == "Linux" ]; then
     # Undo any previous changes
     echo -e "\n\033[1mUndoing any previous changes...\033[0m"
     set +e
-    umount --recursive /mnt
-    cryptsetup close cryptroot
+    sudo umount --recursive /mnt
+    sudo cryptsetup close cryptroot
     set -e
     echo -e "\033[32mPrevious changes undone.\033[0m"
 
     # Partition disk
     echo -e "\n\033[1mPartitioning disk...\033[0m"
-    parted "$DISK" -- mklabel gpt
-    parted "$DISK" -- mkpart ESP fat32 1MiB 513MiB
-    parted "$DISK" -- set 1 boot on
+    sudo parted "$DISK" -- mklabel gpt
+    sudo parted "$DISK" -- mkpart ESP fat32 1MiB 513MiB
+    sudo parted "$DISK" -- set 1 boot on
     DISK_BOOT_PARTITION="${DISK}${DISK_SUFFIX}1"
     if [ -z "$SWAP_SIZE_GiB" ]; then
-        parted "$DISK" -- mkpart Nix ext4 513MiB -"${RESERVE_SIZE_GiB}"GiB
+        sudo parted "$DISK" -- mkpart Nix ext4 513MiB -"${RESERVE_SIZE_GiB}"GiB
         DISK_NIX_PARTITION="${DISK}${DISK_SUFFIX}2"
     else
-        parted "$DISK" -- mkpart Swap linux-swap 513MiB $((513 + 1024*SWAP_SIZE_GiB))MiB
-        parted "$DISK" -- mkpart Nix ext4 $((513 + 1024*SWAP_SIZE_GiB))MiB -"${RESERVE_SIZE_GiB}"GiB
+        sudo parted "$DISK" -- mkpart Swap linux-swap 513MiB $((513 + 1024*SWAP_SIZE_GiB))MiB
+        sudo parted "$DISK" -- mkpart Nix ext4 $((513 + 1024*SWAP_SIZE_GiB))MiB -"${RESERVE_SIZE_GiB}"GiB
         DISK_SWAP_PARTITION="${DISK}${DISK_SUFFIX}2"
         DISK_NIX_PARTITION="${DISK}${DISK_SUFFIX}3"
     fi
     echo -e "\033[32mDisk partitioned successfully.\033[0m"
 
     # Set up encryption (will prompt for password)
-    echo -e "\n\033[1mSetting up encryption (script will prompt for crypt password)...\033[0m"
-    cryptsetup -q -v --verify-passphrase luksFormat "$DISK_NIX_PARTITION"
-    cryptsetup -q -v open "$DISK_NIX_PARTITION" cryptroot
+    echo -e "\n\033[1mSetting up encryption (script will prompt for crypt password several times)...\033[0m"
+    sudo cryptsetup -q --verify-passphrase luksFormat "$DISK_NIX_PARTITION"
+    sudo cryptsetup -q open "$DISK_NIX_PARTITION" cryptroot
     DISK_NIX_ENCRYPT="/dev/mapper/cryptroot"
     echo -e "\033[32mEncryption set up successfully.\033[0m"
 
     # Creating filesystems
     echo -e "\n\033[1mCreating filesystems...\033[0m"
-    mkfs.vfat -n boot "$DISK_BOOT_PARTITION"
+    sudo mkfs.vfat -n BOOT "$DISK_BOOT_PARTITION"
+    sleep 1 # Let mkfs catch its breath
     if [ -n "$SWAP_SIZE_GiB" ]; then
-        mkswap -L swap "$DISK_SWAP_PARTITION"
-        swapon "$DISK_SWAP_PARTITION"
+        sudo mkswap -L SWAP "$DISK_SWAP_PARTITION"
+        sudo swapon "$DISK_SWAP_PARTITION"
     fi
     sleep 1 # Let mkfs catch its breath
-    zpool create \
-        -v \
+    sudo zpool create \
         -o ashift=12 \
         -o autotrim=on \
         -R /mnt \
@@ -116,43 +116,48 @@ if [ "$(uname)" == "Linux" ]; then
 
     # Mounting filesystems
     echo -e "\n\033[1mMounting filesystems...\033[0m"
-    zfs create -v -p -o mountpoint=legacy rpool/local/root
-    zfs snapshot -v rpool/local/root@blank # For rollback
-    zfs create -v -p -o mountpoint=legacy rpool/safe/home
-    zfs create -v -p -o mountpoint=legacy rpool/local/nix
-    zfs create -v -p -o mountpoint=legacy rpool/safe/persist
-    zfs create -v -p -o mountpoint=legacy rpool/safe/log
-    mount -v -t zfs rpool/local/root /mnt
-    mkdir -pv /mnt/{boot,home,nix,persist,var/log}
-    mount -v "$DISK_BOOT_PARTITION" /mnt/boot
-    mount -v -t zfs rpool/safe/home /mnt/home
-    mount -v -t zfs rpool/local/nix /mnt/nix
-    mount -v -t zfs rpool/safe/persist /mnt/persist
-    mount -v -t zfs rpool/safe/log /mnt/var/log
+    sudo zfs create -v -p -o mountpoint=legacy rpool/local/root
+    sudo zfs snapshot rpool/local/root@blank # For rollback
+    sudo zfs create -v -p -o mountpoint=legacy rpool/safe/home
+    sudo zfs create -v -p -o mountpoint=legacy rpool/local/nix
+    sudo zfs create -v -p -o mountpoint=legacy rpool/safe/persist
+    sudo zfs create -v -p -o mountpoint=legacy rpool/safe/log
+    sudo mount -v -t zfs rpool/local/root /mnt
+    sudo mkdir -pv /mnt/{boot,home,nix,persist,var/log}
+    sudo mount -v "$DISK_BOOT_PARTITION" /mnt/boot
+    sudo mount -v -t zfs rpool/safe/home /mnt/home
+    sudo mount -v -t zfs rpool/local/nix /mnt/nix
+    sudo mount -v -t zfs rpool/safe/persist /mnt/persist
+    sudo mount -v -t zfs rpool/safe/log /mnt/var/log
     echo -e "\033[32mFilesystems mounted successfully.\033[0m"
 
     # Generating initrd SSH host key
     echo -e "\n\033[1mGenerating initrd SSH host keys...\033[0m"
-    mkdir -pv /mnt/persist/secret
-    chown root:root /mnt/persist/secret
-    chmod 700 /mnt/persist/secret
-    ssh-keygen -t ed25519 -N "" -C "" -f  /mnt/persist/secret/initrd_ssh_host_ed25519_key
-    chown root:root /mnt/persist/secret/initrd_ssh_host_ed25519_key
-    chmod 600 /mnt/persist/secret/initrd_ssh_host_ed25519_key
+    sudo mkdir -pv /mnt/persist/secret
+    sudo chown root:root /mnt/persist/secret
+    sudo chmod 700 /mnt/persist/secret
+    sudo ssh-keygen -t ed25519 -N "" -C "" -f /mnt/persist/secret/initrd_ssh_host_ed25519_key
+    sudo chown root:root /mnt/persist/secret/initrd_ssh_host_ed25519_key
+    sudo chmod 600 /mnt/persist/secret/initrd_ssh_host_ed25519_key
     echo -e "\033[32mSSH host keys generated successfully.\033[0m"
 
     # Creating public age key for sops-nix
     echo -e "\n\033[1mConverting initrd public SSH host key into public age key for sops-nix...\033[0m"
     # Use nix-shell to run ssh-to-age with flakes (latest), if not available use ssh-to-age directly
-    sudo nix-shell --extra-experimental-features flakes -p ssh-to-age --run 'ssh-to-age < /mnt/persist/secret/initrd_ssh_host_ed25519_key.pub' || \
-        ssh-to-age < /mnt/persist/secret/initrd_ssh_host_ed25519_key.pub
+    sudo nix-shell --extra-experimental-features flakes -p ssh-to-age \
+        --run 'sudo cat /mnt/persist/secret/initrd_ssh_host_ed25519_key.pub | ssh-to-age' || \
+        sudo cat /mnt/persist/secret/initrd_ssh_host_ed25519_key.pub | ssh-to-age
     echo -e "\033[32mAge public key generated successfully.\033[0m"
 
     # Completed
     echo -e "\n\033[1;32mAll steps completed successfully. NixOS is now ready to be installed.\033[0m\n"
-    echo -e "Remember to add the server's age public key to sops-nix before installing!"
-    echo -e "To install NixOS configuration for hostname, run the following command:\n"
-    echo -e "    \033[1msudo nixos-install --no-root-passwd --root /mnt --flake github:rowan-walsh/config#[HOSTNAME]\033[0m\n"
+    echo -e "Before installing, update the configuration repo:"
+    echo -e "    - Add the server's age public key (echoed above) to the sops-nix config"
+    echo -e "      Update .sops.yaml and then run \033[1mjust secrets-sync\033[0m"
+    echo -e "    - Use the server disk UUIDs where necessary in its hardware-configuration.nix"
+    echo -e "      The UUIDs can be retrieved with: \033[1mlsblk -o NAME,MAJ:MIN,SIZE,TYPE,MOUNTPOINTS,UUID\033[0m"
+    echo -e "Then to install NixOS configuration (for [hostname]), run the following command:"
+    echo -e "    \033[1msudo nixos-install --no-root-passwd --root /mnt --flake github:rowan-walsh/config#[hostname]\033[0m\n"
   else
     echo -e "\033[31mUnsupported system type.\033[0m"
     echo "Exiting..."

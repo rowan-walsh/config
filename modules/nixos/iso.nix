@@ -12,8 +12,10 @@
   };
 
   programs.bash.shellAliases = {
-    install = "curl -fsSL https://raw.githubusercontent.com/rowan-walsh/config/main/install.sh | sudo sh";
-    install-offline = "sudo sh $HOME/install.sh";
+    install = ''
+      bash -c "$(curl -fsSL https://raw.githubusercontent.com/rowan-walsh/config/main/install.sh)"
+    '';
+    install-offline = "bash $HOME/install.sh";
   };
 
   environment.systemPackages = with pkgs; [
