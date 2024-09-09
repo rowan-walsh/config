@@ -32,6 +32,9 @@
         "go.mod": "go.sum",
         "flake.nix": "flake.lock"
     },
+    "files.associations": {
+        "*.jjdescription": "git-commit"
+    },
     "files.exclude": {
         "**/.jj": true
     },
