@@ -124,7 +124,7 @@ if [ "$(uname)" == "Linux" ]; then
     sudo zfs create -v -p -o mountpoint=legacy rpool/safe/log
     sudo mount -v -t zfs rpool/local/root /mnt
     sudo mkdir -pv /mnt/{boot,home,nix,persist,var/log}
-    sudo mount -v "$DISK_BOOT_PARTITION" /mnt/boot
+    sudo mount -v -o umask=077 "$DISK_BOOT_PARTITION" /mnt/boot
     sudo mount -v -t zfs rpool/safe/home /mnt/home
     sudo mount -v -t zfs rpool/local/nix /mnt/nix
     sudo mount -v -t zfs rpool/safe/persist /mnt/persist
