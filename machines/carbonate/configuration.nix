@@ -7,13 +7,15 @@
   imports = [
     inputs.impermanence.nixosModules.impermanence
     inputs.home-manager.nixosModules.home-manager
-
     ./hardware-configuration.nix
-
     ./../../modules/nixos/base.nix
     ./../../modules/nixos/desktop.nix
     ./../../modules/nixos/portable.nix
-    ./../../modules/nixos/wifi.nix
+    ({config, ...}:
+      import ./../../modules/nixos/wifi.nix {
+        inherit config;
+        interface = "wlp2s0";
+      })
   ];
 
   home-manager = {
