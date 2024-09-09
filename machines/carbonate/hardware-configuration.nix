@@ -24,9 +24,9 @@
   boot.initrd.luks.devices."cryptroot".device = "/dev/nvme0n1p3";
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/1CEA-8125";
+    device = "/dev/disk/by-uuid/F50B-191D";
     fsType = "vfat";
-    options = ["fmask=0022" "dmask=0022" "umask=0077"];
+    options = ["umask=0077"];
   };
 
   fileSystems."/home" = {
@@ -53,7 +53,7 @@
   };
 
   swapDevices = [
-    {device = "/dev/disk/by-uuid/b4fc1f40-4f54-4126-a99e-9ec500598580";}
+    {device = "/dev/disk/by-uuid/c0283998-6c68-4ecd-80e4-40034d08e7f6";}
   ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
