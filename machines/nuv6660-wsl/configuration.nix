@@ -9,7 +9,7 @@
 
     ./hardware-configuration.nix
 
-    ./../../modules/wsl/base.nix
+    ./../../modules/nixos/base_wsl.nix
   ];
 
   home-manager = {

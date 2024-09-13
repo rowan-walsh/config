@@ -1,4 +1,8 @@
 {pkgs, ...}: {
+  imports = [
+    ./_packages.nix
+  ];
+
   nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
