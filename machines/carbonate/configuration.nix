@@ -7,10 +7,15 @@
   imports = [
     inputs.impermanence.nixosModules.impermanence
     inputs.home-manager.nixosModules.home-manager
+    inputs.disko.nixosModules.disko
+
+    ./disk-configuration.nix
     ./hardware-configuration.nix
+
     ./../../modules/nixos/base.nix
     ./../../modules/nixos/desktop.nix
     ./../../modules/nixos/portable.nix
+
     ({config, ...}:
       import ./../../modules/nixos/wifi.nix {
         inherit config;
