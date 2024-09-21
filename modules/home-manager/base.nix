@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -31,8 +32,8 @@
     jujutsu = {
       enable = true;
       settings = {
-        "user.name" = "Rowan Walsh";
-        "user.email" = "1158758+rowan-walsh@users.noreply.github.com";
+        "user.name" = config.programs.git.userName;
+        "user.email" = config.programs.git.userEmail;
 
         "ui.default-command" = "status";
         "ui.pager" = "less -FRX";
@@ -43,7 +44,9 @@
 
         "signing.sign-all" = true;
         "signing.backend" = "gpg";
-        "signing.key" = "7C222EAA5A246E8F";
+        "signing.key" = config.programs.git.signing.key;
+
+        "template-aliases.'format_short_signature(signature)'" = "'signature.name()'";
       };
     };
   };
