@@ -15,6 +15,7 @@
     ./../../modules/nixos/base.nix
     ./../../modules/nixos/desktop.nix
     ./../../modules/nixos/portable.nix
+    ./../../modules/nixos/zfs.nix
 
     ({config, ...}:
       import ./../../modules/nixos/wifi.nix {
