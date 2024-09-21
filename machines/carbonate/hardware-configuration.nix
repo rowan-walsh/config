@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   lib,
   pkgs,
@@ -6,7 +7,7 @@
   ...
 }: {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
   ];
 
   boot = {
