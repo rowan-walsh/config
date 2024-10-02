@@ -63,7 +63,6 @@
       };
 
       mise = nixpkgs.lib.nixosSystem {
-        system = "aaarch64-linux";
         specialArgs = {inherit inputs outputs;};
         modules = [./machines/mise/configuration.nix];
       };

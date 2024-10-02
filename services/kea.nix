@@ -1,4 +1,4 @@
-{}: {
+{
   services.kea = {
     dhcp4 = {
       enable = true;
