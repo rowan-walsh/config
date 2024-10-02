@@ -39,6 +39,7 @@
 
     systems = [
       "x86_64-linux"
+      "aarch64-linux"
     ];
 
     forAllSystems = nixpkgs.lib.genAttrs systems;
@@ -59,6 +60,12 @@
           (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
           ./machines/iso/configuration.nix
         ];
+      };
+
+      mise = nixpkgs.lib.nixosSystem {
+        system = "aaarch64-linux";
+        specialArgs = {inherit inputs outputs;};
+        modules = [./machines/mise/configuration.nix];
       };
 
       nuv6660-wsl = nixpkgs.lib.nixosSystem {
