@@ -62,6 +62,11 @@
   };
 
   environment.persistence."/persist" = {
-    directories = ["/var/lib/kea"];
+    directories = [
+      {
+        directory = "/var/lib/private/kea";
+        mode = "0700";
+      }
+    ];
   };
 }
