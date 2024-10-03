@@ -20,13 +20,13 @@
       ssh = {
         enable = true;
         port = 2222;
-        hostKeys = ["/persist/secret/initrd_ssh_host_ed25519_key"];
+        hostKeys = [/persist/secret/initrd_ssh_host_ed25519_key];
         authorizedKeys = config.users.users.rww.openssh.authorizedKeys.keys;
       };
     };
 
     secrets = {
-      "initrd_ssh_host_ed25519_key" = "/persist/secret/initrd_ssh_host_ed25519_key";
+      "initrd_ssh_host_ed25519_key" = /persist/secret/initrd_ssh_host_ed25519_key;
     };
   };
 
