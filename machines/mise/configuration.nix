@@ -19,6 +19,10 @@
     ({config, ...}: import ./../../modules/nixos/wifi.nix {inherit config;})
   ];
 
+  # nixos-hardware defines a different boot loader
+  boot.loader.systemd-boot.enable = false;
+  boot.loader.efi.canTouchEfiVariables = false;
+
   home-manager = {
     extraSpecialArgs = {inherit inputs outputs;};
     useGlobalPkgs = true;
