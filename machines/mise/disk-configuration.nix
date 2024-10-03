@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   disko.devices = {
     disk = {
       "main" = {
@@ -47,4 +47,8 @@
       mountOptions = ["defaults" "size=25%" "mode=755"];
     };
   };
+
+  # Ensure that the persistent filesystems are mounted before boot
+  # Currently no way to do this with disko
+  fileSystems."/persist".neededForBoot = lib.mkForce true;
 }
