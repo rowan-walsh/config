@@ -3,7 +3,7 @@
     disk = {
       "main" = {
         type = "disk";
-        device = "/dev/mmcblk1";
+        device = "/dev/mmcblk1"; # typically /dev/mmcblk0 for the SD card
         content = {
           type = "gpt";
           partitions = {
