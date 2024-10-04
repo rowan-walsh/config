@@ -15,8 +15,6 @@
     ./../../modules/nixos/base.nix
     ./../../services/blocky.nix
     ./../../services/kea.nix
-
-    ({config, ...}: import ./../../modules/nixos/wifi.nix {inherit config;})
   ];
 
   # nixos-hardware defines a different boot loader
@@ -44,7 +42,7 @@
     };
   };
 
-  services.kea.dhcp4.settings.interfaces-config.interfaces = ["wlan0"];
+  services.kea.dhcp4.settings.interfaces-config.interfaces = ["end0"];
 
   networking.hostName = "mise";
   networking.hostId = builtins.substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
