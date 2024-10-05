@@ -1,8 +1,9 @@
-{
+{config, ...}: {
   services.blocky = {
     enable = true;
 
     settings = {
+      port = 53;
       upstreams.groups.default = [
         "1.1.1.1"
         "1.0.0.1"
@@ -71,4 +72,7 @@
       };
     };
   };
+
+  networking.firewall.allowedTCPPorts = [config.services.blocky.settings.port];
+  networking.firewall.allowedUDPPorts = [config.services.blocky.settings.port];
 }
