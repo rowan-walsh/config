@@ -2,6 +2,7 @@
   inputs,
   config,
   outputs,
+  pkgs,
   ...
 }: {
   imports = [
@@ -17,9 +18,14 @@
     # ./../../services/kea.nix
   ];
 
+  # Raspberry pi 4
   # nixos-hardware defines a different boot loader
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = false;
+  environment.systemPackages = with pkgs; [
+    libraspberrypi
+    raspberrypi-eeprom
+  ];
 
   # Static IP address since this is the DNS and DHCP server
   networking.interfaces."end0" = {
