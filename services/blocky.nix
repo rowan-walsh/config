@@ -75,4 +75,7 @@
 
   networking.firewall.allowedTCPPorts = [config.services.blocky.settings.port];
   networking.firewall.allowedUDPPorts = [config.services.blocky.settings.port];
+
+  # Create the /var/log/blocky directory
+  systemd.services.blocky.serviceConfig.LogsDirectory = "blocky";
 }
