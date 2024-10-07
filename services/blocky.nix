@@ -5,11 +5,22 @@
     settings = {
       port = 53;
       upstreams.groups.default = [
-        "1.1.1.1"
-        "1.0.0.1"
-        "2606:4700:4700::1111"
-        "2606:4700:4700::1001"
+        # Cloudflare
+        "https://one.one.one.one/dns-query"
+        "tcp-tls:2606:4700:4700::1111"
+        "tcp-tls:1.1.1.1"
+
+        # Quad9
+        "https://dns.quad9.net/dns-query"
+        "tcp-tls:2620:fe::fe"
       ];
+      bootstrapDns = {
+        upstream = "https://one.one.one.one/dns-query";
+        ips = [
+          "1.1.1.1"
+          "1.0.0.1"
+        ];
+      };
       blocking = {
         denylists = {
           "general" = [
