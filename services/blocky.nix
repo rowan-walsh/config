@@ -3,7 +3,7 @@
     enable = true;
 
     settings = {
-      port = 53;
+      ports.dns = 53;
       upstreams.groups.default = [
         # Cloudflare
         "https://one.one.one.one/dns-query"
@@ -78,8 +78,8 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [config.services.blocky.settings.port];
-  networking.firewall.allowedUDPPorts = [config.services.blocky.settings.port];
+  networking.firewall.allowedTCPPorts = [config.services.blocky.settings.ports.dns];
+  networking.firewall.allowedUDPPorts = [config.services.blocky.settings.ports.dns];
 
   # Create the /var/log/blocky directory
   systemd.services.blocky.serviceConfig.LogsDirectory = "blocky";
