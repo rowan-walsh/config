@@ -4,6 +4,7 @@
 
     settings = {
       ports.dns = 53;
+      ports.http = "127.0.0.1:4000";
       upstreams.groups.default = [
         # Cloudflare
         "1.1.1.1" # need at least one plain IP address in case the system time is wrong, which breaks TLS
