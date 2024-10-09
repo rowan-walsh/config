@@ -6,6 +6,7 @@
       ports.dns = 53;
       upstreams.groups.default = [
         # Cloudflare
+        "1.1.1.1" # need at least one plain IP address in case the system time is wrong, which breaks TLS
         "https://one.one.one.one/dns-query"
         "tcp-tls:2606:4700:4700::1111"
         "tcp-tls:1.1.1.1"
