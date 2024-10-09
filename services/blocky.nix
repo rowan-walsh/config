@@ -14,13 +14,7 @@
         "https://dns.quad9.net/dns-query"
         "tcp-tls:2620:fe::fe"
       ];
-      bootstrapDns = {
-        upstream = "https://one.one.one.one/dns-query";
-        ips = [
-          "1.1.1.1"
-          "1.0.0.1"
-        ];
-      };
+      bootstrapDns.upstream = "1.1.1.1";
       blocking = {
         denylists = {
           "general" = [
