@@ -3,9 +3,6 @@
     "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
     "editor.inlineSuggest.enabled": true,
-    "[elixir]": {
-        "files.trimTrailingWhitespace": true
-    },
     "evenBetterToml.schema.links": true,
     "evenBetterToml.formatter.trailingNewline": true,
     "evenBetterToml.formatter.indentTables": true,
@@ -28,6 +25,7 @@
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.expand": false,
     "explorer.fileNesting.patterns": {
         "go.mod": "go.sum",
         "flake.nix": "flake.lock"
@@ -92,8 +90,5 @@
     "window.confirmSaveUntitledWorkspace": false,
     "workbench.startupEditor": "none",
     "workbench.colorTheme": "Material Theme Palenight High Contrast",
-    "workbench.iconTheme": "material-icon-theme",
-    "zig.path": "",
-    "zig.zls.path": "c:\\Users\\rwnwa\\AppData\\Roaming\\Code\\User\\globalStorage\\ziglang.vscode-zig\\zls_install\\zls.exe",
-    "zig.initialSetupDone": true
+    "workbench.iconTheme": "material-icon-theme"
 }

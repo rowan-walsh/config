@@ -33,6 +33,7 @@
         imports = [
           ./../../modules/home-manager/base.nix
           ./../../modules/home-manager/desktop.nix
+          ./../../modules/home-manager/fonts.nix
         ];
       };
     };

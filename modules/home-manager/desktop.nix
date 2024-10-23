@@ -54,6 +54,26 @@
       ];
     userSettings = lib.importJSON ./vscode/settings.json;
   };
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      "user.name" = config.programs.git.userName;
+      "user.email" = config.programs.git.userEmail;
+
+      "ui.default-command" = "status";
+      "ui.pager" = "less -FRX";
+      "ui.editor" = "code --wait";
+      "ui.diff-editor" = ":builtin";
+      "ui.merge-editor" = ''["code", "--wait", "--merge", "$left", "$right", "$base", "$output"]'';
+      "ui.merge-tools.code.merge-tool-edits-conflict-markers" = true;
+
+      "signing.sign-all" = true;
+      "signing.backend" = "gpg";
+      "signing.key" = config.programs.git.signing.key;
+
+      "template-aliases.'format_short_signature(signature)'" = "'signature.name()'";
+    };
+  };
 
   dconf = {
     enable = true;
