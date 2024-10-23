@@ -54,7 +54,7 @@
       };
 
       iso = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
+        system = "x86_64-linux";
         specialArgs = {inherit inputs outputs;};
         modules = [
           (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
@@ -65,6 +65,11 @@
       mise = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [./machines/mise/configuration.nix];
+      };
+
+      misen = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [./machines/misen/configuration.nix];
       };
 
       nuv6660-wsl = nixpkgs.lib.nixosSystem {
