@@ -25,7 +25,7 @@ in {
               content = {
                 type = "filesystem";
                 format = "vfat";
-                extraArgs = [ "-n EFI" ];
+                extraArgs = ["-n EFI"];
                 mountOptions = ["umask=077"]; # prevents "security hole" warning
                 mountpoint = "/boot";
                 postMountHook = ''
