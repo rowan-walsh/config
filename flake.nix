@@ -62,11 +62,6 @@
         ];
       };
 
-      mise = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [./machines/mise/configuration.nix];
-      };
-
       misen = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [./machines/misen/configuration.nix];
