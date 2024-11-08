@@ -72,6 +72,11 @@
         modules = [./machines/nuv6660-wsl/configuration.nix];
       };
 
+      tweeze = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [./machines/tweeze/configuration.nix];
+      };
+
       # Add other systems here as needed
     };
   };
