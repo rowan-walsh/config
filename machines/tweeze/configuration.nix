@@ -14,6 +14,7 @@
     ./hardware-configuration.nix
 
     ./../../modules/nixos/base.nix
+    ./../../modules/nixos/desktop.nix
 
     ./../../services/dolphin-emu.nix
 
@@ -32,6 +33,7 @@
       "rww" = {
         imports = [
           ./../../modules/home-manager/base.nix
+          ./../../modules/home-manager/desktop.nix
         ];
       };
     };
