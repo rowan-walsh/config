@@ -21,7 +21,7 @@
     ({config, ...}:
       import ./../../modules/nixos/wifi.nix {
         inherit config;
-        interface = "enp0s31f6";
+        interface = "wlp2s0";
       })
   ];
 
