@@ -72,6 +72,10 @@
       "signing.key" = config.programs.git.signing.key;
 
       "template-aliases.'format_short_signature(signature)'" = "'signature.name()'";
+
+      "aliases.bm" = ''["bookmark"]'';
+      "aliases.br" = ''["bookmark"]'';
+      "aliases.logall" = ''["log", "-r", "all()"]'';
     };
   };
 }

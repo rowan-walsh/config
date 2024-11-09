@@ -28,7 +28,8 @@
     "explorer.fileNesting.expand": false,
     "explorer.fileNesting.patterns": {
         "go.mod": "go.sum",
-        "flake.nix": "flake.lock"
+        "flake.nix": "flake.lock",
+        "Cargo.toml": "Cargo.lock"
     },
     "files.associations": {
         "*.jjdescription": "git-commit"
