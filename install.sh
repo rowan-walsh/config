@@ -6,7 +6,7 @@ echo -e "--- \033[1mRunning Install Script\033[0m ---"
 
 # Prompt user for hostname
 echo -e "\n\033[1mSelect NixOS configuration to install:\033[0m"
-configs=$(nix flake show github:rowan-walsh/config --json | jq '.nixosConfigurations | keys[]' --raw-output)
+configs=$(nix flake show github:rowan-walsh/config --json 2>/dev/null | jq '.nixosConfigurations | keys[]' --raw-output)
 PS3="Select configuration (by number): "
 select config_name in $configs; do
   if [ -n "$config_name" ]; then
@@ -31,7 +31,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # Unmount, format, and mount disk(s)
     echo -e "\n\033[1mRunning disko to format and mount disk(s)...\033[0m"
-    sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- \
+    sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- \
         --mode disko \
         --flake "github:rowan-walsh/config#$config_name" \
         --root-mountpoint /mnt
