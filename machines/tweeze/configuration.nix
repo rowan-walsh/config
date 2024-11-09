@@ -15,8 +15,7 @@
 
     ./../../modules/nixos/base.nix
     ./../../modules/nixos/desktop.nix
-
-    ./../../services/dolphin-emu.nix
+    ./../../modules/nixos/dolphin-emu.nix
 
     ({config, ...}:
       import ./../../modules/nixos/wifi.nix {
