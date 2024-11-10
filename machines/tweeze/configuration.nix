@@ -34,6 +34,18 @@
           ./../../modules/home-manager/base.nix
           ./../../modules/home-manager/desktop.nix
         ];
+
+        dconf = {
+          settings = {
+            "org/gnome/desktop/session" = {
+              idle-delay = 0; # Never lock the screen
+            };
+            "org/gnome/settings-daemon/plugins/power" = {
+              sleep-inactive-ac-type = "nothing"; # Never suspend
+              power-button-action = "interactive"; # Power button powers off
+            };
+          };
+        };
       };
     };
   };
