@@ -54,7 +54,22 @@
           mountpoint = "none";
         };
 
+        # Take blank snapshot if it doesn't already exist
+        postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^rpool/local/root@blank$' || zfs snapshot rpool/local/root@blank";
+
         datasets = {
+          "local/root" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = "/";
+          };
+
+          "safe/home" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = "/home";
+          };
+
           "local/nix" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
@@ -74,10 +89,6 @@
           };
         };
       };
-    };
-    nodev."/" = {
-      fsType = "tmpfs";
-      mountOptions = ["defaults" "size=25%" "mode=755"];
     };
   };
 
