@@ -2,6 +2,7 @@
   inputs,
   config,
   outputs,
+  lib,
   pkgs,
   ...
 }: {
@@ -37,8 +38,8 @@
 
         dconf = {
           settings = {
-            "org/gnome/desktop/session" = {
-              idle-delay = 0; # Never lock the screen
+            "org/gnome/desktop/session" = with lib.gvariant; {
+              idle-delay = mkUint32 0; # Never lock the screen
             };
             "org/gnome/settings-daemon/plugins/power" = {
               sleep-inactive-ac-type = "nothing"; # Never suspend
