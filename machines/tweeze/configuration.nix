@@ -17,6 +17,7 @@
     ./../../modules/nixos/base.nix
     ./../../modules/nixos/desktop.nix
     ./../../modules/nixos/dolphin-emu.nix
+    ./../../modules/nixos/public.nix
     ./../../modules/nixos/zfs.nix
 
     ({config, ...}:
@@ -34,6 +35,13 @@
       "rww" = {
         imports = [
           ./../../modules/home-manager/base.nix
+          ./../../modules/home-manager/desktop.nix
+        ];
+      };
+
+      "public" = {
+        imports = [
+          ./../../modules/home-manager/base-public.nix
           ./../../modules/home-manager/desktop.nix
         ];
 
