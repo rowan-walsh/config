@@ -60,6 +60,9 @@
     };
   };
 
+  # Prevent auto-suspend from login page
+  services.xserver.displayManager.gdm.autoSuspend = false;
+
   networking.hostName = "tweeze";
   networking.hostId = builtins.substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
 }
