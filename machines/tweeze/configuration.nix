@@ -27,6 +27,13 @@
       })
   ];
 
+  environment.persistence."/persist".directories = [
+    {
+      directory = "/srv/shared-games";
+      mode = "0777";
+    }
+  ];
+
   home-manager = {
     extraSpecialArgs = {inherit inputs outputs;};
     useGlobalPkgs = true;
@@ -37,13 +44,23 @@
           ./../../modules/home-manager/base.nix
           ./../../modules/home-manager/desktop.nix
         ];
+
+        # Create a symlink to the shared games folder
+        home.activation.linkGames = lib.hm.dag.entryAfter ["writeBoundary"] ''
+          run ln -sfn $VERBOSE_ARG /srv/shared-games $HOME/Games
+        '';
       };
 
-      "public" = {
+      "public" = {lib, ...}: {
         imports = [
           ./../../modules/home-manager/base-public.nix
           ./../../modules/home-manager/desktop.nix
         ];
+
+        # Create a symlink to the shared games folder
+        home.activation.linkGames = lib.hm.dag.entryAfter ["writeBoundary"] ''
+          run ln -sfn $VERBOSE_ARG /srv/shared-games $HOME/Games
+        '';
 
         dconf = {
           settings = {
