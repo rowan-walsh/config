@@ -64,6 +64,9 @@
 
         dconf = {
           settings = {
+            "org/gnome/desktop/interface" = with lib.gvariant; {
+              text-scaling-factor = mkFloat 1.25; # easier to read on TV
+            };
             "org/gnome/desktop/session" = with lib.gvariant; {
               idle-delay = mkUint32 0; # Never lock the screen
             };
