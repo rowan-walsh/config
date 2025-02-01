@@ -58,11 +58,9 @@
           "other" = [
             "https://raw.githubusercontent.com/d43m0nhLInt3r/socialblocklists/master/TikTok/tiktokblocklist.txt"
             "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts"
-            "https://v.firebog.net/hosts/Prigent-Crypto.txt"
             "https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt"
             "https://raw.githubusercontent.com/AssoEchap/stalkerware-indicators/master/generated/hosts"
             "https://urlhaus.abuse.ch/downloads/hostfile/"
-            "https://zerodot1.gitlab.io/CoinBlockerLists/hosts_browser"
           ];
         };
         clientGroupsBlock.default = [
