@@ -12,27 +12,14 @@
         [
           bbenoist.nix
           charliermarsh.ruff
-          elixir-lsp.vscode-elixir-ls
           editorconfig.editorconfig
           github.copilot
           github.copilot-chat
           golang.go
-          ms-azuretools.vscode-docker
           ms-python.debugpy
           ms-python.python
           ms-python.vscode-pylance
-          ms-toolsai.jupyter
-          ms-toolsai.jupyter-keymap
-          ms-toolsai.jupyter-renderers
-          ms-toolsai.vscode-jupyter-cell-tags
-          ms-toolsai.vscode-jupyter-slideshow
-          ms-vscode-remote.remote-containers
-          ms-vscode-remote.remote-ssh
-          ms-vscode-remote.remote-ssh-edit
-          ms-vscode-remote.remote-wsl
-          ms-vscode.cpptools
           ms-vscode.hexeditor
-          ms-vscode.makefile-tools
           ms-vscode.powershell
           nefrob.vscode-just-syntax
           pkief.material-icon-theme
@@ -40,8 +27,6 @@
           rust-lang.rust-analyzer
           tamasfe.even-better-toml
           timonwong.shellcheck
-          vadimcn.vscode-lldb
-          ziglang.vscode-zig
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
@@ -86,4 +71,13 @@
       aliases.logall = ["log" "-r" "all()"];
     };
   };
+
+  programs.uv = {
+    enable = true;
+    settings = {
+      python-downloads = "never";
+      python-preference = "only-system";
+    };
+  };
+  programs.go.enable = true;
 }

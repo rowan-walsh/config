@@ -1,6 +1,6 @@
 {
     "editor.bracketPairColorization.enabled": false,
-    "editor.fontFamily": "Fira Code",
+    "editor.fontFamily": "FiraCode Nerd Font",
     "editor.fontLigatures": true,
     "editor.inlineSuggest.enabled": true,
     "evenBetterToml.schema.links": true,
@@ -56,7 +56,6 @@
     "go-template.languages": [
         "html"
     ],
-    "notebook.output.textLineLimit": 60,
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
@@ -89,7 +88,9 @@
     "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
     "telemetry.telemetryLevel": "off",
     "window.confirmSaveUntitledWorkspace": false,
+    "window.autoDetectColorScheme": true,
     "workbench.startupEditor": "none",
-    "workbench.colorTheme": "Material Theme Palenight High Contrast",
+    "workbench.preferredLightColorTheme": "Material Theme Lighter High Contrast",
+    "workbench.preferredDarkColorTheme": "Material Theme Palenight High Contrast",
     "workbench.iconTheme": "material-icon-theme"
 }
