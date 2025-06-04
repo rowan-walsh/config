@@ -8,7 +8,7 @@ lint:
     statix check .
 
 fmt:
-    nix fmt
+    nix fmt .
 
 install MACHINE="carbonate" IP="" USER="rww":
     #!/usr/bin/env sh
