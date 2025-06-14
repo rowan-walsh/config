@@ -3,7 +3,7 @@
     disk = {
       "nvme0" = {
         type = "disk";
-        device = "/dev/nvme0n1"; #TODO confirm
+        device = "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_M.2_250GB_S33CNX0H520222H";
         content = {
           type = "gpt";
           partitions = {
@@ -37,7 +37,7 @@
       };
       "ssd0" = {
         type = "disk";
-        device = "/dev/sda"; #TODO confirm
+        device = "/dev/disk/by-id/ata-M4-CT256M4SSD3_0000000013010923A0D5";
         content = {
           type = "gpt";
           partitions = {
@@ -53,7 +53,7 @@
       };
       "hd0" = {
         type = "disk";
-        device = "/dev/sdb"; #TODO confirm
+        device = "/dev/disk/by-id/ata-ST1000DM003-1SB102_Z9A33AG9";
         content = {
           type = "gpt";
           partitions = {
@@ -69,7 +69,7 @@
       };
       "hd1" = {
         type = "disk";
-        device = "/dev/sdc"; #TODO confirm
+        device = "/dev/disk/by-id/ata-Hitachi_HTS545050B9A300_100905PBN40017JG208E";
         content = {
           type = "gpt";
           partitions = {
@@ -85,7 +85,7 @@
       };
       "hd2" = {
         type = "disk";
-        device = "/dev/sdd"; #TODO confirm
+        device = "/dev/disk/by-id/ata-HITACHI_HTS727550A9E364_J37B0084HARYUE";
         content = {
           type = "gpt";
           partitions = {
