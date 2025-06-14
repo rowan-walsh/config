@@ -18,14 +18,14 @@
                 mountpoint = "/boot";
               };
             };
-            "ZFS" = {
+            "zfs" = {
               end = "-22G";
               content = {
                 type = "zfs";
                 pool = "rpool";
               };
             };
-            "Swap" = {
+            "swap" = {
               size = "20G"; # leave some unused space
               content = {
                 type = "swap";
@@ -41,7 +41,7 @@
         content = {
           type = "gpt";
           partitions = {
-            "ZFS" = {
+            "zfs" = {
               size = "100%";
               content = {
                 type = "zfs";
@@ -57,7 +57,7 @@
         content = {
           type = "gpt";
           partitions = {
-            "ZFS" = {
+            "zfs" = {
               size = "100%";
               content = {
                 type = "zfs";
@@ -73,7 +73,7 @@
         content = {
           type = "gpt";
           partitions = {
-            "ZFS" = {
+            "zfs" = {
               size = "100%";
               content = {
                 type = "zfs";
@@ -89,7 +89,7 @@
         content = {
           type = "gpt";
           partitions = {
-            "ZFS" = {
+            "zfs" = {
               size = "100%";
               content = {
                 type = "zfs";
