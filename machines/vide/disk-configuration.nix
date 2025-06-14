@@ -115,10 +115,6 @@
                 mode = ""; # No mirroring or raidz (single disk)
                 members = ["ssd0"];
               }
-              {
-                mode = "raidz1";
-                members = ["hd0" "hd1" "hd2"];
-              }
             ];
           };
         };
