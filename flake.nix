@@ -77,6 +77,11 @@
         modules = [./machines/tweeze/configuration.nix];
       };
 
+      vide = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [./machines/vide/configuration.nix];
+      };
+
       # Add other systems here as needed
     };
   };
