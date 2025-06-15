@@ -7,7 +7,7 @@
 
   dconf = {
     enable = true;
-    settings = {
+    settings = with lib.hm.gvariant; {
       #   "org/gnome/shell" = {
       #       favorite-apps = [
       #           "org.gnome.Nautilus.desktop"
@@ -19,14 +19,19 @@
         # Gnome dark mode
         color-scheme = "prefer-dark";
       };
-      # inspo: https://github.com/NixOS/nixpkgs/issues/114514
-      # "org/gnome/mutter" = {
-      #   # Fractional scaling
-      #   experimental-features = ["scale-monitor-framebuffer"];
-      # };
+      "org/gnome/mutter" = {
+        experimental-features = ["scale-monitor-framebuffer"]; # Fractional scaling
+      };
       "org/gnome/settings-daemon/plugins/color" = {
         night-light-enabled = true;
-        night-light-temperature = 3700;
+        night-light-schedule-from = 21.0; # 9PM
+        night-light-schedule-to = 6.0; # 6AM
+        night-light-temperature = mkUint32 4500;
+      };
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        home = ["<Super>e"];
+        calculator = ["<Super>c"];
+        search = ["<Alt>f"];
       };
       "org/gnome/desktop/background" = {
         picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/morphogenesis-l.svg";

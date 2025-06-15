@@ -2,6 +2,7 @@
   inputs,
   config,
   outputs,
+  pkgs,
   ...
 }: {
   imports = [
@@ -29,6 +30,13 @@
           ./../../modules/home-manager/desktop.nix
           ./../../modules/home-manager/dev.nix
           ./../../modules/home-manager/fonts.nix
+        ];
+
+        home.packages = with pkgs; [
+          prusa-slicer
+          signal-desktop
+          tidal-hifi
+          vlc
         ];
       };
     };
