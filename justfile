@@ -10,7 +10,7 @@ lint:
 fmt:
     nix fmt .
 
-install MACHINE="carbonate" IP="" USER="rww":
+install MACHINE=`hostname` IP="" USER=`whoami`:
     #!/usr/bin/env sh
     if [ -z "{{ IP }}" ]; then
         sudo nixos-rebuild switch --fast --flake ".#{{ MACHINE }}"
