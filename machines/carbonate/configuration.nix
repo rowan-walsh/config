@@ -17,11 +17,12 @@
     ./../../modules/nixos/portable.nix
     ./../../modules/nixos/zfs.nix
 
-    ({config, ...}:
-      import ./../../modules/nixos/wifi.nix {
-        inherit config;
-        interface = "wlp2s0";
-      })
+    (import ./../../modules/nixos/wifi.nix {
+      inherit config;
+      interface = "wlp2s0";
+    })
+
+    ./../../services/tailscale.nix
   ];
 
   home-manager = {

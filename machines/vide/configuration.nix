@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  lib,
   outputs,
   pkgs,
   ...
@@ -17,7 +18,12 @@
     ./../../modules/nixos/desktop.nix
     ./../../modules/nixos/steam.nix
     ./../../modules/nixos/zfs.nix
+
+    ./../../services/tailscale.nix
   ];
+
+  # Enable as tailscale exit node
+  services.tailscale.extraSetFlags = config.services.tailscale.extraUpFlags or [] ++ ["--advertise-exit-node"];
 
   home-manager = {
     extraSpecialArgs = {inherit inputs outputs;};
