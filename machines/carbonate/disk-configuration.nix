@@ -100,7 +100,9 @@
 
   # Ensure that the persistent datasets are mounted before boot
   # Currently no way to do this with disko
-  fileSystems."/home".neededForBoot = lib.mkForce true;
-  fileSystems."/persist".neededForBoot = lib.mkForce true;
-  fileSystems."/var/log".neededForBoot = lib.mkForce true;
+  fileSystems = {
+    "/home".neededForBoot = lib.mkForce true;
+    "/persist".neededForBoot = lib.mkForce true;
+    "/var/log".neededForBoot = lib.mkForce true;
+  };
 }

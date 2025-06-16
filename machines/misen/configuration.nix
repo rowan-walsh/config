@@ -19,17 +19,19 @@
   ];
 
   # Static IP address since this is the DNS and DHCP server
-  networking.interfaces."enp0s31f6" = {
-    useDHCP = false;
-    ipv4.addresses = [
-      {
-        address = "192.168.1.2";
-        prefixLength = 24;
-      }
-    ];
+  networking = {
+    interfaces."enp0s31f6" = {
+      useDHCP = false;
+      ipv4.addresses = [
+        {
+          address = "192.168.1.2";
+          prefixLength = 24;
+        }
+      ];
+    };
+    nameservers = ["127.0.0.1"]; # DNS server is this machine
+    defaultGateway = "192.168.1.1"; # router
   };
-  networking.nameservers = ["127.0.0.1"]; # DNS server is this machine
-  networking.defaultGateway = "192.168.1.1"; # router
 
   home-manager = {
     extraSpecialArgs = {inherit inputs outputs;};

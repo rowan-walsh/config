@@ -1,0 +1,6 @@
+disabled = [
+    "manual_inherit_from", # W04 "Assignment instead of inherit from"
+]
+nix_version = '2.4'
+ignore = []
+

@@ -19,8 +19,6 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
 
-  hardware.enableRedistributableFirmware = lib.mkDefault true;
-
   # NVIDIA GTX 970 GPU support
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
@@ -28,8 +26,11 @@
       "nvidia-settings"
       "nvidia-persistenced"
     ];
-  hardware.graphics.enable = true;
-  hardware.nvidia.open = false; # Use proprietary drivers
+  hardware = {
+    enableRedistributableFirmware = lib.mkDefault true;
+    graphics.enable = true;
+    nvidia.open = false; # Use proprietary drivers
+  };
   services.xserver.videoDrivers = ["nvidia"];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
