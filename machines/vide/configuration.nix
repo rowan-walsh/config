@@ -43,6 +43,14 @@
           tidal-hifi
           vlc
         ];
+
+        dconf = {
+          settings = {
+            "org/gnome/desktop/interface" = {
+              text-scaling-factor = 1.25; # easier to read on main monitor
+            };
+          };
+        };
       };
     };
   };
