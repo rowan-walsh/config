@@ -6,6 +6,7 @@
 }: {
   home.packages = with pkgs; [
     alejandra # for nix formatting
+    claude-code
     deadnix # for nix linting
     just
     sops # for secrets
