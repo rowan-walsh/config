@@ -5,6 +5,7 @@ up:
     nix flake update
 
 lint:
+    deadnix --fail .
     statix check .
 
 fmt:
