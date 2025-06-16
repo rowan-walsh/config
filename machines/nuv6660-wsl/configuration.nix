@@ -18,7 +18,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {
-      rww = {
+      "rww" = {
         imports = [
           ./../../modules/home-manager/base.nix
         ];

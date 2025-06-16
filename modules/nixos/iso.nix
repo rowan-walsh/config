@@ -3,7 +3,7 @@
     ./_packages.nix
   ];
 
-  users.users.nixos = {
+  users.users."nixos" = {
     isNormalUser = true;
     extraGroups = ["networkmanager" "wheel"];
     openssh.authorizedKeys.keys = [

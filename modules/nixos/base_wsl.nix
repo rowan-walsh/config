@@ -11,9 +11,9 @@
     };
   };
 
-  users.users.rww = {
+  users.users."rww" = {
     isNormalUser = true;
-    description = "rww";
+    description = "Rowan Walsh";
   };
 
   security.sudo.wheelNeedsPassword = false;
