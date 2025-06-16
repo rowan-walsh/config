@@ -11,6 +11,9 @@ lint:
 fmt:
     nix fmt .
 
+check:
+    nix flake check
+
 install MACHINE=`hostname` IP="" USER=`whoami`:
     #!/usr/bin/env sh
     if [ -z "{{ IP }}" ]; then
