@@ -71,12 +71,6 @@
           merge-tools.code.merge-tool-edits-conflict-markers = true;
         };
 
-        signing = {
-          behavior = "own";
-          backend = "gpg";
-          key = config.programs.git.signing.key;
-        };
-
         template-aliases."format_short_signature(signature)" = "signature.name()";
 
         aliases.l = ["log" "-n10"];

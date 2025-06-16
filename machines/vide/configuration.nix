@@ -35,6 +35,7 @@
           ./../../modules/home-manager/desktop.nix
           ./../../modules/home-manager/dev.nix
           ./../../modules/home-manager/fonts.nix
+          ./../../modules/home-manager/gpg.nix
         ];
 
         home.packages = with pkgs; [

@@ -9,16 +9,9 @@
     enable = true;
     userName = "Rowan Walsh";
     userEmail = "1158758+rowan-walsh@users.noreply.github.com";
-    signing.signByDefault = true;
-    signing.key = "7C222EAA5A246E8F";
-    extraConfig = {
-      init.defaultBranch = "main";
-      core.autocrlf = "input";
-    };
+    extraConfig.init.defaultBranch = "main";
   };
-  programs.bash = {
-    enable = true;
-  };
+  programs.bash.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
