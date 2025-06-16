@@ -1,10 +1,4 @@
-{
-  inputs,
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{config, ...}: {
   sops.secrets."public-user-password" = {
     neededForUsers = true;
   };

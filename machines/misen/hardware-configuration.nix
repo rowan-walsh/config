@@ -1,9 +1,6 @@
 {
-  inputs,
   config,
   lib,
-  pkgs,
-  modulesPath,
   ...
 }: {
   boot = {
