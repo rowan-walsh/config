@@ -4,6 +4,13 @@
   pkgs,
   ...
 }: {
+  home.packages = with pkgs; [
+    alejandra # for nix formatting
+    just
+    sops # for secrets
+    statix # for nix linting
+  ];
+
   programs = {
     vscode = {
       enable = true;
@@ -36,8 +43,6 @@
               version = "0.3.0";
               sha256 = "da29a516efb6dcdff716eb8150a664a5102f6be4ee95cc463f65d5f41d5933b0";
             }
-          ]
-          ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
               name = "vsc-material-theme-but-i-wont-sue-you";
               publisher = "t3dotgg";

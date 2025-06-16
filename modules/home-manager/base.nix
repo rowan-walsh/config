@@ -4,10 +4,6 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ./_packages.nix
-  ];
-
   home = {
     username = "rww";
     homeDirectory = "/home/rww";
