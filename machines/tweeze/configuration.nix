@@ -2,7 +2,6 @@
   inputs,
   config,
   outputs,
-  lib,
   ...
 }: {
   imports = [
@@ -38,7 +37,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {
-      "rww" = {
+      "rww" = {lib, ...}: {
         imports = [
           ./../../modules/home-manager/base.nix
           ./../../modules/home-manager/desktop.nix
@@ -63,8 +62,11 @@
 
         dconf = {
           settings = {
-            "org/gnome/desktop/session" = with lib.gvariant; {
-              idle-delay = mkUint32 0; # Never lock the screen
+            "org/gnome/desktop/interface" = {
+              text-scaling-factor = 1.25; # easier to read on TV
+            };
+            "org/gnome/desktop/session" = {
+              idle-delay = lib.hm.gvariant.mkUint32 0; # Never lock the screen
             };
             "org/gnome/settings-daemon/plugins/power" = {
               sleep-inactive-ac-type = "nothing"; # Never suspend
@@ -77,7 +79,7 @@
   };
 
   # Prevent auto-suspend from login page
-  services.xserver.displayManager.gdm.autoSuspend = false;
+  services.displayManager.gdm.autoSuspend = false;
 
   networking.hostName = "tweeze";
   networking.hostId = builtins.substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
