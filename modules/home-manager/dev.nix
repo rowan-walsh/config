@@ -18,40 +18,29 @@
       enable = true;
       profiles.default = {
         enableExtensionUpdateCheck = false;
-        extensions = with pkgs.vscode-extensions;
-          [
-            bbenoist.nix
-            charliermarsh.ruff
-            editorconfig.editorconfig
-            github.copilot
-            github.copilot-chat
-            golang.go
-            ms-python.debugpy
-            ms-python.python
-            ms-python.vscode-pylance
-            ms-vscode.hexeditor
-            ms-vscode.powershell
-            nefrob.vscode-just-syntax
-            pkief.material-icon-theme
-            redhat.vscode-xml
-            rust-lang.rust-analyzer
-            tamasfe.even-better-toml
-            timonwong.shellcheck
-          ]
-          ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-            {
-              name = "alignment";
-              publisher = "annsk";
-              version = "0.3.0";
-              sha256 = "da29a516efb6dcdff716eb8150a664a5102f6be4ee95cc463f65d5f41d5933b0";
-            }
-            {
-              name = "vsc-material-theme-but-i-wont-sue-you";
-              publisher = "t3dotgg";
-              version = "35.0.3";
-              sha256 = "453601d71405eea40273bce752b501e0f90a957175caf82b102ad96cd57b2440";
-            }
-          ];
+        extensions = with pkgs.nix-vscode-extensions; [
+          vscode-marketplace.bbenoist.nix
+          vscode-marketplace.charliermarsh.ruff
+          vscode-marketplace.chouzz.vscode-better-align
+          vscode-marketplace.editorconfig.editorconfig
+          vscode-marketplace.github.copilot
+          vscode-marketplace.golang.go
+          vscode-marketplace.lencerf.beancount
+          vscode-marketplace.ms-python.debugpy
+          vscode-marketplace.ms-python.python
+          vscode-marketplace.ms-python.vscode-pylance
+          vscode-marketplace.ms-vscode.hexeditor
+          vscode-marketplace.ms-vscode.powershell
+          vscode-marketplace.nefrob.vscode-just-syntax
+          vscode-marketplace.pkief.material-icon-theme
+          vscode-marketplace.redhat.vscode-xml
+          vscode-marketplace.rust-lang.rust-analyzer
+          vscode-marketplace.t3dotgg.vsc-material-theme-but-i-wont-sue-you
+          vscode-marketplace.tamasfe.even-better-toml
+          vscode-marketplace.timonwong.shellcheck
+
+          vscode-marketplace-release.github.copilot-chat
+        ];
         userSettings = lib.importJSON ./vscode/settings.json;
       };
     };

@@ -49,13 +49,6 @@
     },
     "go.toolsManagement.autoUpdate": true,
     "go.lintTool": "golangci-lint",
-    "go-template.patterns": [
-        "*.go.tmpl.html",
-        "*.go.tmpl.txt"
-    ],
-    "go-template.languages": [
-        "html"
-    ],
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
@@ -85,7 +78,6 @@
     "rust-analyzer.semanticHighlighting.operator.specialization.enable": true,
     "rust-analyzer.semanticHighlighting.punctuation.enable": true,
     "rust-analyzer.semanticHighlighting.punctuation.specialization.enable": true,
-    "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
     "telemetry.telemetryLevel": "off",
     "window.confirmSaveUntitledWorkspace": false,
     "window.autoDetectColorScheme": true,
