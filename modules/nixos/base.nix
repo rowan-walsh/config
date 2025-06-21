@@ -59,6 +59,7 @@
     directories = [
       "/var/lib/nixos"
       "/etc/NetworkManager/system-connections"
+      "/var/lib/NetworkManager"
     ];
 
     files = [
@@ -68,9 +69,6 @@
       "/etc/ssh/ssh_host_ed25519_key"
       "/etc/ssh/ssh_host_rsa_key.pub"
       "/etc/ssh/ssh_host_rsa_key"
-      "/var/lib/NetworkManager/secret_key"
-      "/var/lib/NetworkManager/seen-bssids"
-      "/var/lib/NetworkManager/timestamps"
     ];
   };
 
