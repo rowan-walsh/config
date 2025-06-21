@@ -17,9 +17,9 @@ check:
 install MACHINE=`hostname` IP="" USER=`whoami`:
     #!/usr/bin/env sh
     if [ -z "{{ IP }}" ]; then
-        sudo nixos-rebuild switch --fast --flake ".#{{ MACHINE }}"
+        sudo nixos-rebuild switch --flake ".#{{ MACHINE }}"
     else
-        nixos-rebuild switch --fast --flake ".#{{ MACHINE }}" --use-remote-sudo --target-host "{{ USER }}@{{ IP }}" --build-host "{{ USER }}@{{ IP }}"
+        nixos-rebuild switch --flake ".#{{ MACHINE }}" --use-remote-sudo --target-host "{{ USER }}@{{ IP }}" --build-host "{{ USER }}@{{ IP }}"
     fi
 
 build-iso:
