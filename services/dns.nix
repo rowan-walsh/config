@@ -1,22 +1,56 @@
 {config, ...}: {
-  services.blocky = {
+  # Use unbound as a recursive DNS resolver
+  services.unbound = {
     enable = true;
+    settings = {
+      server = {
+        interface = "127.0.0.1";
+        port = 5335;
+        access-control = [
+          "127.0.0.1/32 allow"
+        ];
+        # Security
+        hide-identity = true; # Don't reveal server identity
+        hide-version = true; # Don't reveal server version
+        private-address = [
+          "192.168.0.0/16"
+          "169.254.0.0/16"
+          "172.16.0.0/12"
+          "10.0.0.0/8"
+          "fd00::/8"
+          "fe80::/10"
+        ];
+        module-config = ''"validator iterator"''; # (Default) Enable DNSSEC validation
+        auto-trust-anchor-file = "/var/lib/unbound/root.key"; # (Default) Path to DNSSEC root key info, automatically updated by unbound
+        # Performance
+        num-threads = 4; # Use 4 worker threads
+        msg-cache-slabs = 4; # Message cache distributed across 4 slabs
+        rrset-cache-slabs = 4; # RRset cache distributed across 4 slabs
+        infra-cache-slabs = 4; # Infrastructure cache distributed across 4 slabs
+        key-cache-slabs = 4; # Key cache distributed across 4 slabs
+        so-reuseport = true; # Allow multiple processes to bind to same port
+        prefetch = true; # Enable prefetching of popular DNS records before expiry
+        prefetch-key = true; # Enable prefetching of popular DNS keys before expiry
+      };
+    };
+  };
 
+  environment.persistence."/persist".directories = [
+    "/var/lib/unbound" # Necessary to persist as root.key is automatically updated by unbound
+  ];
+
+  # Use Blocky as a filtering DNS server
+  services.blocky = let
+    # Use unbound server as upstream (same machine)
+    upstreamDNS = "127.0.0.1:${toString config.services.unbound.settings.server.port}";
+  in {
+    enable = true;
     settings = {
       ports.dns = 53;
       ports.http = "127.0.0.1:4000";
-      upstreams.groups.default = [
-        # Cloudflare
-        "1.1.1.1" # need at least one plain IP address in case the system time is wrong, which breaks TLS
-        "https://one.one.one.one/dns-query"
-        "tcp-tls:2606:4700:4700::1111"
-        "tcp-tls:1.1.1.1"
-
-        # Quad9
-        "https://dns.quad9.net/dns-query"
-        "tcp-tls:2620:fe::fe"
-      ];
-      bootstrapDns.upstream = "1.1.1.1";
+      upstreams.strategy = "strict"; # Only one upstream, no sense being fancy
+      upstreams.groups.default = [upstreamDNS];
+      bootstrapDns.upstream = upstreamDNS;
       blocking = {
         denylists = {
           "general" = [

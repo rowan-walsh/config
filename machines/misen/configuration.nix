@@ -13,7 +13,7 @@
     ./hardware-configuration.nix
 
     ./../../modules/nixos/base.nix
-    ./../../services/blocky.nix
+    ./../../services/dns.nix
     # ./../../services/kea.nix
   ];
 
