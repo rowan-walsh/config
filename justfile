@@ -19,7 +19,7 @@ install MACHINE=`hostname` IP="" USER=`whoami`:
     if [ -z "{{ IP }}" ]; then
         sudo nixos-rebuild switch --flake ".#{{ MACHINE }}"
     else
-        nixos-rebuild switch --flake ".#{{ MACHINE }}" --use-remote-sudo --target-host "{{ USER }}@{{ IP }}" --build-host "{{ USER }}@{{ IP }}"
+        nixos-rebuild switch --flake ".#{{ MACHINE }}" --sudo --ask-sudo-password --target-host "{{ USER }}@{{ IP }}" --build-host "{{ USER }}@{{ IP }}"
     fi
 
 build-iso:
