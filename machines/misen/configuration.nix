@@ -14,7 +14,7 @@
 
     ./../../modules/nixos/base.nix
     ./../../services/dns.nix
-    # ./../../services/kea.nix
+    ./../../services/dhcp.nix
   ];
 
   # Static IP address since this is the DNS and DHCP server
@@ -45,7 +45,7 @@
     };
   };
 
-  # services.kea.dhcp4.settings.interfaces-config.interfaces = ["end0"];
+  services.kea.dhcp4.settings.interfaces-config.interfaces = ["enp0s31f6"];
 
   networking.hostName = "misen";
   networking.hostId = builtins.substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
