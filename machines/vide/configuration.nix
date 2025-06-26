@@ -22,7 +22,9 @@
   ];
 
   # Enable as tailscale exit node
-  services.tailscale.extraSetFlags = config.services.tailscale.extraUpFlags or [] ++ ["--advertise-exit-node"];
+  services.tailscale.extraSetFlags = ["--advertise-exit-node"]; # Add exit node flag
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1; # Enable IPv4 forwarding
+  boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = 1; # Enable IPv6 forwarding
 
   home-manager = {
     extraSpecialArgs = {inherit inputs outputs;};
