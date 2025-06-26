@@ -23,6 +23,8 @@
         inherit config;
         interface = "wlp2s0";
       })
+
+    ./../../services/tailscale.nix
   ];
 
   environment.persistence."/persist".directories = [

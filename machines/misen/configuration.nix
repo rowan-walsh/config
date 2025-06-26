@@ -15,6 +15,7 @@
     ./../../modules/nixos/base.nix
     ./../../services/dns.nix
     ./../../services/dhcp.nix
+    ./../../services/tailscale.nix
   ];
 
   # Static IP address since this is the DNS and DHCP server
