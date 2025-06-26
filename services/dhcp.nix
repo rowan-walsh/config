@@ -51,6 +51,22 @@
             name = "domain-name-servers";
             data = "192.168.1.2";
           }
+          {
+            name = "domain-name";
+            data = "local";
+          }
+        ];
+        loggers = [
+          {
+            name = "kea-dhcp4";
+            severity = "INFO"; # Log level
+            output_options = [
+              {
+                output = "/var/log/kea/kea-dhcp4.log";
+                maxver = 10; # Keep 10 rotated log files
+              }
+            ];
+          }
         ];
       };
     };
@@ -66,4 +82,7 @@
       defaultPerms.mode = "0700";
     }
   ];
+
+  # Create the /var/log/kea directory
+  systemd.services.kea-dhcp4-server.serviceConfig.LogsDirectory = "kea";
 }
