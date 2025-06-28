@@ -14,12 +14,14 @@ fmt:
 check:
     nix flake check
 
-install MACHINE=`hostname` IP="" USER=`whoami`:
+install CONFIG=`hostname` HOST="" USER=`whoami`:
     #!/usr/bin/env sh
-    if [ -z "{{ IP }}" ]; then
-        sudo nixos-rebuild switch --flake ".#{{ MACHINE }}"
+    if [ -z "{{ HOST }}" ]; then
+        echo -e "Installing \033[1m.#{{ CONFIG }}\033[0m config locally..."
+        sudo nixos-rebuild switch --flake ".#{{ CONFIG }}"
     else
-        nixos-rebuild switch --flake ".#{{ MACHINE }}" --sudo --ask-sudo-password --target-host "{{ USER }}@{{ IP }}" --build-host "{{ USER }}@{{ IP }}"
+        echo -e "Installing \033[1m.#{{ CONFIG }}\033[0m config to \033[1m{{ USER }}@{{ HOST }}\033[0m..."
+        nixos-rebuild switch --flake ".#{{ CONFIG }}" --sudo --ask-sudo-password --target-host "{{ USER }}@{{ HOST }}" --build-host "{{ USER }}@{{ HOST }}"
     fi
 
 build-iso:
