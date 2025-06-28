@@ -38,6 +38,7 @@
           vscode-marketplace.t3dotgg.vsc-material-theme-but-i-wont-sue-you
           vscode-marketplace.tamasfe.even-better-toml
           vscode-marketplace.timonwong.shellcheck
+          vscode-marketplace.tomoki1207.pdf
 
           vscode-marketplace-release.github.copilot-chat
         ];
