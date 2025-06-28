@@ -27,9 +27,6 @@ install CONFIG=`hostname` HOST="" USER=`whoami`:
 build-iso:
     nix --extra-experimental-features "nix-command flakes" build ".#nixosConfigurations.iso.config.system.build.isoImage"
 
-build-wsl:
-    nix --extra-experimental-features "nix-command flakes" run ".#nixosConfigurations.nuv6660-wsl.config.system.build.tarballBuilder"
-
 secrets-edit:
     sops secrets/secrets.yaml
 

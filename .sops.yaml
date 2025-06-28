@@ -1,5 +1,4 @@
 keys:
-  - &nuv6660 age1e02f5up2s4a4frjpyg00hrhcyrhmzzq63ecetvnpal7knerhrghqmh857a
   - &carbonate age13h26qgss0xlm35qktka585q6jf24y2sxc2crh5efmttvgevpv4equsk2hf
   - &misen age1qwjeqgxfaj533jer3pgcpl5wkuvudjzj4x5yw6fgan4akfyquszqv2cr0e
   - &tweeze age1fekzchup0fwk5329smzzshpmkvq8vmra5d3pqg69fpk3vllmzp5shzgw5l
@@ -8,7 +7,6 @@ creation_rules:
   - path_regex: secrets(\\[^\\]+?|/[^/]+?)$
     key_groups:
       - age:
-          - *nuv6660
           - *carbonate
           - *misen
           - *tweeze
