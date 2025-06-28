@@ -25,6 +25,9 @@
       })
 
     ./../../services/tailscale.nix
+    ./../../services/grafana.nix
+    ./../../services/prometheus
+    ./../../services/prometheus/exporters/node.nix
   ];
 
   environment.persistence."/persist".directories = [

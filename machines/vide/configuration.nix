@@ -19,6 +19,7 @@
     ./../../modules/nixos/zfs.nix
 
     ./../../services/tailscale.nix
+    ./../../services/prometheus/exporters/node.nix
   ];
 
   # Enable as tailscale exit node
