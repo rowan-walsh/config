@@ -30,6 +30,35 @@
     ./../../services/prometheus/exporters/node.nix
   ];
 
+  services.prometheus.scrapeConfigs = [
+    {
+      job_name = "node";
+      static_configs = [
+        {
+          labels.alias = "misen";
+          targets = ["misen:${toString config.services.prometheus.exporters.node.port}"];
+        }
+        {
+          labels.alias = "tweeze";
+          targets = ["tweeze:${toString config.services.prometheus.exporters.node.port}"];
+        }
+        {
+          labels.alias = "vide";
+          targets = ["vide:${toString config.services.prometheus.exporters.node.port}"];
+        }
+      ];
+    }
+    {
+      job_name = "blocky";
+      static_configs = [
+        {
+          labels.alias = "misen";
+          targets = ["misen:4000"]; #TODO: Use config.services.blocky.settings.ports.http (need to make modules imported by not enabled)
+        }
+      ];
+    }
+  ];
+
   environment.persistence."/persist".directories = [
     {
       directory = "/srv/shared-games";

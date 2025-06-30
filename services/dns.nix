@@ -47,7 +47,7 @@
     enable = true;
     settings = {
       ports.dns = 53;
-      ports.http = "127.0.0.1:4000";
+      ports.http = 4000;
       upstreams.strategy = "strict"; # Only one upstream, no sense being fancy
       upstreams.groups.default = [upstreamDNS];
       bootstrapDns.upstream = upstreamDNS;
@@ -109,10 +109,14 @@
         type = "csv";
         target = "/var/log/blocky";
       };
+      prometheus.enable = true;
     };
   };
 
-  networking.firewall.allowedTCPPorts = [config.services.blocky.settings.ports.dns];
+  networking.firewall.allowedTCPPorts = [
+    config.services.blocky.settings.ports.dns
+    config.services.blocky.settings.ports.http
+  ];
   networking.firewall.allowedUDPPorts = [config.services.blocky.settings.ports.dns];
 
   # Create the /var/log/blocky directory
