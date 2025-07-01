@@ -57,6 +57,23 @@
         }
       ];
     }
+    {
+      job_name = "tailscale";
+      static_configs = [
+        {
+          labels.alias = "misen";
+          targets = ["misen:5252"];
+        }
+        {
+          labels.alias = "tweeze";
+          targets = ["tweeze:5252"];
+        }
+        {
+          labels.alias = "vide";
+          targets = ["vide:5252"];
+        }
+      ];
+    }
   ];
 
   environment.persistence."/persist".directories = [
