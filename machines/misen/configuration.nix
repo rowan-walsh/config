@@ -17,6 +17,7 @@
     ./../../services/dhcp.nix
     ./../../services/tailscale.nix
     ./../../services/prometheus/exporters/node.nix
+    ./../../services/alloy.nix
   ];
 
   # Static IP address since this is the DNS and DHCP server
@@ -32,6 +33,7 @@
     };
     nameservers = ["127.0.0.1"]; # DNS server is this machine
     defaultGateway = "192.168.1.1"; # router
+    resolvconf.useLocalResolver = false; # Unbound tries to set this to true, but it messes with Tailscale's MagicDNS
   };
 
   home-manager = {

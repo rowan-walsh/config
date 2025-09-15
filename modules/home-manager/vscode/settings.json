@@ -29,13 +29,16 @@
     "explorer.fileNesting.patterns": {
         "go.mod": "go.sum",
         "flake.nix": "flake.lock",
-        "Cargo.toml": "Cargo.lock"
+        "Cargo.toml": "Cargo.lock",
+        "devenv.nix": "devenv.lock"
     },
     "files.associations": {
         "*.jjdescription": "git-commit"
     },
     "files.exclude": {
-        "**/.jj": true
+        "**/.jj": true,
+        ".direnv": true,
+        ".devenv": true
     },
     "git.confirmSync": true,
     "github.copilot.enable": {
@@ -79,6 +82,16 @@
     "rust-analyzer.semanticHighlighting.punctuation.enable": true,
     "rust-analyzer.semanticHighlighting.punctuation.specialization.enable": true,
     "telemetry.telemetryLevel": "off",
+    "terminal.integrated.fontFamily": "FiraCode Nerd Font",
+    "terminal.integrated.fontLigatures.enabled": true,
+    "tinymist.formatterMode": "typstyle",
+    "tinymist.formatterPrintWidth": 80,
+    "[typst]": {
+        "editor.rulers": [
+            80, 88
+        ]
+    },
+    "update.mode": "manual",
     "window.confirmSaveUntitledWorkspace": false,
     "window.autoDetectColorScheme": true,
     "workbench.startupEditor": "none",

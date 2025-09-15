@@ -9,7 +9,7 @@
         lease-database = {
           type = "memfile";
           persist = true;
-          name = "/var/lib/private/kea/kea-leases4.csv";
+          name = "/var/lib/kea/kea-leases4.csv";
         };
         subnet4 = [
           {

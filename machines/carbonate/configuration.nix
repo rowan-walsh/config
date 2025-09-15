@@ -23,6 +23,8 @@
     })
 
     ./../../services/tailscale.nix
+    ./../../services/prometheus/exporters/node.nix
+    ./../../services/alloy.nix
   ];
 
   home-manager = {

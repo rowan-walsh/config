@@ -16,6 +16,7 @@
     ./../../modules/nixos/desktop.nix
     ./../../modules/nixos/dolphin-emu.nix
     ./../../modules/nixos/public.nix
+    ./../../modules/nixos/steam.nix
     ./../../modules/nixos/zfs.nix
 
     ({config, ...}:
@@ -28,6 +29,8 @@
     ./../../services/grafana.nix
     ./../../services/prometheus
     ./../../services/prometheus/exporters/node.nix
+    ./../../services/loki.nix
+    ./../../services/alloy.nix
   ];
 
   services.prometheus.scrapeConfigs = [

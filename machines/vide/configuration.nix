@@ -20,6 +20,7 @@
 
     ./../../services/tailscale.nix
     ./../../services/prometheus/exporters/node.nix
+    ./../../services/alloy.nix
   ];
 
   # Enable as tailscale exit node
@@ -46,6 +47,8 @@
           signal-desktop
           tidal-hifi
           vlc
+          calibre
+          discord
         ];
 
         dconf = {

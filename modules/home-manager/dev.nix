@@ -8,9 +8,13 @@
     alejandra # for nix formatting
     claude-code
     deadnix # for nix linting
+    devenv
     just
+    gcc
+    rustup
     sops # for secrets
     statix # for nix linting
+    tinymist # for typst LSP
   ];
 
   programs = {
@@ -31,6 +35,7 @@
           vscode-marketplace.ms-python.vscode-pylance
           vscode-marketplace.ms-vscode.hexeditor
           vscode-marketplace.ms-vscode.powershell
+          vscode-marketplace.myriad-dreamin.tinymist
           vscode-marketplace.nefrob.vscode-just-syntax
           vscode-marketplace.pkief.material-icon-theme
           vscode-marketplace.redhat.vscode-xml
@@ -77,5 +82,7 @@
     };
 
     go.enable = true;
+
+    direnv.enable = true;
   };
 }
