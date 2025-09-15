@@ -13,6 +13,8 @@
     ./hardware-configuration.nix
 
     ./../../modules/nixos/base.nix
+    ./../../modules/nixos/zfs
+
     ./../../services/dns.nix
     ./../../services/dhcp.nix
     ./../../services/tailscale.nix

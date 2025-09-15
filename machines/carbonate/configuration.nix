@@ -15,7 +15,8 @@
     ./../../modules/nixos/base.nix
     ./../../modules/nixos/desktop.nix
     ./../../modules/nixos/portable.nix
-    ./../../modules/nixos/zfs.nix
+    ./../../modules/nixos/zfs
+    ./../../modules/nixos/zfs/snapshots.nix
 
     (import ./../../modules/nixos/wifi.nix {
       inherit config;

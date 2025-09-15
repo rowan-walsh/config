@@ -17,7 +17,7 @@
     ./../../modules/nixos/dolphin-emu.nix
     ./../../modules/nixos/public.nix
     ./../../modules/nixos/steam.nix
-    ./../../modules/nixos/zfs.nix
+    ./../../modules/nixos/zfs
 
     ({config, ...}:
       import ./../../modules/nixos/wifi.nix {

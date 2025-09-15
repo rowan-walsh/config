@@ -16,7 +16,8 @@
     ./../../modules/nixos/base.nix
     ./../../modules/nixos/desktop.nix
     ./../../modules/nixos/steam.nix
-    ./../../modules/nixos/zfs.nix
+    ./../../modules/nixos/zfs
+    ./../../modules/nixos/zfs/snapshots.nix
 
     ./../../services/tailscale.nix
     ./../../services/prometheus/exporters/node.nix
